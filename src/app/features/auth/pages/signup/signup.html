@@ -1,5 +1,24 @@
-<form [formGroup]="form" (ngSubmit)="login()">
-  <input formControlName="email" type="email" placeholder="Email" />
-  <input formControlName="password" type="password" placeholder="Password" />
-  <button type="submit">Sign Up</button>
-</form>
+<div class="wrapper">
+  <form [formGroup]="form" (ngSubmit)="register()" class="signup-form">
+    <span class="logo-icon">
+      <i class="pi pi-send" style="font-size: 2.5rem"></i>
+    </span>
+    <p-iftalabel class="label">
+      <input formControlName="email" type="email" pInputText />
+      <label for="email">Email</label>
+    </p-iftalabel>
+    <p-iftalabel>
+      <p-password
+        formControlName="password"
+        type="password"
+        autocomplete="off"
+        [toggleMask]="true"
+      />
+      <label for="password">Password</label>
+    </p-iftalabel>
+    @if (errorMessage) {
+      <small class="error-msg">{{ errorMessage }}</small>
+    }
+    <p-button label="Sign Up" severity="success" type="submit" />
+  </form>
+</div>

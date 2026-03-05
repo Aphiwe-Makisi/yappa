@@ -1,18 +1,28 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth';
-
+import { sanitisedUserInput } from '../../../../shared/utils';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { ButtonModule } from 'primeng/button';
+import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 @Component({
   selector: 'app-signup',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputTextModule, PasswordModule, IftaLabelModule, ButtonModule],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })
 export class Signup {
   form!: FormGroup;
+  errorMessage: string = '';
 
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
+
+  ngOnInit() {
+    this.initForm();
+  }
 
   initForm(): void {
     this.form = this.fb.group({
@@ -21,31 +31,16 @@ export class Signup {
     });
   }
 
-  login(): any {
-    const email = this.sanitisedUserInput(this.form.get('email')?.value);
-    const password = this.sanitisedUserInput(this.form.get('password')?.value);
+  register(): any {
+    const email = sanitisedUserInput(this.form.get('email')?.value);
+    const password = sanitisedUserInput(this.form.get('password')?.value);
     this.authService
       .signUp(email, password)
       .then((res: any) => {
         console.log(res);
       })
       .catch((error: any) => {
-        console.log(error);
+        this.errorMessage = handleFirebaseAuthError(error.code);
       });
-  }
-
-  sanitisedUserInput(input: string): string {
-    if (!input) return '';
-
-    const map: { [key: string]: string } = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;',
-      '`': '&#x60;',
-    };
-
-    return input.replace(/[&<>"'`]/g, (char) => map[char]);
   }
 }
