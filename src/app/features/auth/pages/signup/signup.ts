@@ -1,14 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  EmailValidator,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth';
-import { sanitisedUserInput } from '../../../../shared/utils';
+import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { ButtonModule } from 'primeng/button';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 import { RouterLink } from '@angular/router';
-import { User } from '@angular/fire/auth';
+import { Logo } from '../../../../shared/components/logo/logo';
 @Component({
   selector: 'app-signup',
   imports: [
@@ -19,6 +26,7 @@ import { User } from '@angular/fire/auth';
     ButtonModule,
     FormsModule,
     RouterLink,
+    Logo,
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
@@ -26,6 +34,7 @@ import { User } from '@angular/fire/auth';
 export class Signup {
   form!: FormGroup;
   errorMessage: string = '';
+  getFieldError = getFieldError;
 
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
@@ -36,10 +45,10 @@ export class Signup {
 
   initForm(): void {
     this.form = this.fb.group({
-      full_name: [''],
-      email: [''],
-      password: [''],
-      confirm_password: [''],
+      full_name: ['', Validators.required, Validators.minLength(6)],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirm_password: ['', Validators.required, Validators.minLength(6)],
     });
   }
 
@@ -47,13 +56,26 @@ export class Signup {
     const fullname = sanitisedUserInput(this.form.get('full_name')?.value);
     const email = sanitisedUserInput(this.form.get('email')?.value);
     const password = sanitisedUserInput(this.form.get('password')?.value);
+    const confirmPassword = sanitisedUserInput(this.form.get('confirm_password')?.value);
+    const match = this.comparePasswords(password, confirmPassword);
+
+    if (!match) {
+      this.errorMessage = "Passwords don't match";
+      return;
+    }
+
     this.authService
       .signUp(email, password)
       .then((res: any) => {
+        // TODO: create a profile using the method in profile service
         console.log(res.user);
       })
       .catch((error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);
       });
+  }
+
+  comparePasswords(password: string, confirmPassword: string): boolean {
+    return password === confirmPassword;
   }
 }

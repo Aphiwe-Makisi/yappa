@@ -19,24 +19,6 @@ form {
   width: 100%;
 }
 
-.logo {
-  margin-bottom: 48px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.logo-icon {
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-primary);
-  color: white;
-  width: fit-content;
-  border-radius: 10px;
-}
-
 .logo-subtitle {
   margin-top: 10px;
 }
