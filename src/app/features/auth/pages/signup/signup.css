@@ -1,26 +1,60 @@
 .wrapper {
-  width: 100%;
   height: 100%;
-  background-color: yellow;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  padding: 20px;
+}
+
+form {
+  margin: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+p-iftalabel.label.p-iftalabel > input,
+::ng-deep .custom-btn,
+form {
+  width: 100%;
+}
+
+.logo {
+  margin-bottom: 48px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .logo-icon {
-  padding: 15px;
+  padding: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: green;
+  color: white;
   width: fit-content;
   border-radius: 10px;
 }
 
-.signup-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center;
+.logo-subtitle {
+  margin-top: 10px;
+}
+
+::ng-deep .custom-btn {
+  height: 46px;
+}
+
+p {
+  color: grey;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: teal;
+}
+
+.page-footer {
+  text-align: center;
 }

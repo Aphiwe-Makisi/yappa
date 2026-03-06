@@ -1,24 +1,51 @@
 <div class="wrapper">
-  <form [formGroup]="form" (ngSubmit)="register()" class="signup-form">
+  <div class="logo">
     <span class="logo-icon">
-      <i class="pi pi-send" style="font-size: 2.5rem"></i>
+      <i class="pi pi-send" style="font-size: 1rem"></i>
     </span>
+    <h2>Yappa</h2>
+  </div>
+  <div class="">
+    <h2>Create Account</h2>
+    <p class="logo-subtitle">Start chatting in seconds</p>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="register()" class="signup-form">
     <p-iftalabel class="label">
-      <input formControlName="email" type="email" pInputText />
+      <input id="full-name" formControlName="full_name" type="text" pInputText />
+      <label for="full-name">Full Name</label>
+    </p-iftalabel>
+    <p-iftalabel class="label">
+      <input o formControlName="email" type="email" pInputText />
       <label for="email">Email</label>
     </p-iftalabel>
-    <p-iftalabel>
-      <p-password
+    <p-iftalabel class="label">
+      <input
+        id="password"
         formControlName="password"
         type="password"
         autocomplete="off"
-        [toggleMask]="true"
+        name="password"
+        pInputText
       />
-      <label for="password">Password</label>
+      <label for="confirm-password">Password</label>
+    </p-iftalabel>
+    <p-iftalabel class="label">
+      <input
+        id="confirm-password"
+        formControlName="confirm_password"
+        type="password"
+        autocomplete="off"
+        name="confirm-password"
+        pInputText
+      />
+      <label for="confirm-password">Confirm Password</label>
     </p-iftalabel>
     @if (errorMessage) {
       <small class="error-msg">{{ errorMessage }}</small>
     }
-    <p-button label="Sign Up" severity="success" type="submit" />
+    <p-button label="Sign Up" severity="success" type="submit" styleClass="custom-btn" />
   </form>
+  <div class="page-footer">
+    <p>Already have an account? &nbsp;<a routerLink="">Sign In</a></p>
+  </div>
 </div>
