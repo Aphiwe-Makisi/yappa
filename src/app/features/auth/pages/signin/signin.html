@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <app-logo></app-logo>
+  <div class="">
+    <h2>Welcome back</h2>
+    <p class="logo-subtitle">Sign in to your account</p>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="login()" class="signup-form">
+    <p-iftalabel class="label">
+      <input o formControlName="email" type="email" email pInputText />
+      <label for="email">Email</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('email'))) {
+      <small class="error-msg">{{ getFieldError(form.get('email')) }}</small>
+    }
+    <p-iftalabel class="label">
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        autocomplete="off"
+        name="password"
+        pInputText
+      />
+      <label for="confirm-password">Password</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('password'))) {
+      <small class="error-msg">{{ getFieldError(form.get('password')) }}</small>
+    }
+    @if (errorMessage) {
+      <small class="error-msg">{{ errorMessage }}</small>
+    }
+    <div class="forgot-password">
+      <a routerLink="">Forgot password?</a>
+    </div>
+    <p-button label="Sign In" type="submit" styleClass="custom-btn" [disabled]="form.invalid" />
+  </form>
+  <div class="page-footer">
+    <p>Don't have an account? &nbsp;<a routerLink="/auth/register">Sign Up</a></p>
+  </div>
+</div>

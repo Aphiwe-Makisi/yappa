@@ -1,0 +1,58 @@
+<div class="wrapper">
+  <app-logo></app-logo>
+  <div class="">
+    <h2>Create Account</h2>
+    <p class="logo-subtitle">Start chatting in seconds</p>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="register()" class="signup-form">
+    <p-iftalabel class="label">
+      <input id="full-name" formControlName="full_name" type="text" pInputText />
+      <label for="full-name">Full Name</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('full_name'))) {
+      <small class="error-msg">{{ getFieldError(form.get('full_name')) }}</small>
+    }
+    <p-iftalabel class="label">
+      <input o formControlName="email" type="email" email pInputText />
+      <label for="email">Email</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('email'))) {
+      <small class="error-msg">{{ getFieldError(form.get('email')) }}</small>
+    }
+    <p-iftalabel class="label">
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        autocomplete="off"
+        name="password"
+        pInputText
+      />
+      <label for="confirm-password">Password</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('password'))) {
+      <small class="error-msg">{{ getFieldError(form.get('password')) }}</small>
+    }
+    <p-iftalabel class="label">
+      <input
+        id="confirm-password"
+        formControlName="confirm_password"
+        type="password"
+        autocomplete="off"
+        name="confirm-password"
+        pInputText
+      />
+      <label for="confirm_password">Confirm Password</label>
+    </p-iftalabel>
+    @if (getFieldError(form.get('email'))) {
+      <small class="error-msg">{{ getFieldError(form.get('confirm_password')) }}</small>
+    }
+    @if (errorMessage) {
+      <small class="error-msg">{{ errorMessage }}</small>
+    }
+    <p-button label="Sign Up" type="submit" styleClass="custom-btn" [disabled]="form.invalid" />
+  </form>
+  <div class="page-footer">
+    <p>Already have an account? &nbsp;<a routerLink="/auth/login">Sign In</a></p>
+  </div>
+</div>

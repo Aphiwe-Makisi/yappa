@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'primeicons/primeicons.css';
+
+:root {
+  /* Your app variables */
+  --color-primary: teal;
+  --color-text-muted: grey;
+  --color-success: green;
+  --color-danger: red;
+  --border-radius-md: 10px;
+
+  /* PrimeNG token overrides */
+  --p-button-success-background: var(--color-primary);
+  --p-button-success-hover-background: red;
+  --p-primary-color: var(--color-primary);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+.error-msg {
+  color: var(--color-danger);
+}

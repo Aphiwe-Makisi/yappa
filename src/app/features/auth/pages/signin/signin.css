@@ -1,0 +1,46 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+form {
+  margin: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+p-iftalabel.label.p-iftalabel > input,
+::ng-deep .custom-btn,
+form {
+  width: 100%;
+}
+
+.logo-subtitle {
+  margin-top: 10px;
+}
+
+::ng-deep .custom-btn {
+  height: 46px;
+}
+
+p {
+  color: var(--color-text-muted);
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.page-footer {
+  text-align: center;
+}
+
+.forgot-password {
+  text-align: end;
+}
