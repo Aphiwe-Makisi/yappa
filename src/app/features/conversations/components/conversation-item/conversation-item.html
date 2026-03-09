@@ -4,11 +4,11 @@
     <strong class="display-name">{{ conversation.displayName }}</strong>
     <div class="last-message-wrapper">
       <i class="pi pi-clock"></i>
-      <small class="last-message">This is the last message received in this conversation</small>
+      <small class="last-message">{{ conversation.lastMessage }}</small>
     </div>
   </div>
   <span class="meta-data flex-column">
-    <small>{{ conversation.lastMessageTime }}</small>
+    <small>{{ conversation.lastMessageTime | firestoreDate | date: 'HH:mm' }}</small>
     <small class="message-count" [ngClass]="conversation.unreadCount ? 'show' : 'hide'">{{
       conversation.unreadCount
     }}</small>

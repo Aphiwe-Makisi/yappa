@@ -14,8 +14,12 @@
     <!-- TODO: Future implementation -->
   </div>
   <div class="chat-list">
-    @for (conversation of conversations(); track conversation.id) {
-      <app-conversation-item [conversation]="conversation"></app-conversation-item>
+    @let conversations = conversations$ | async;
+
+    @if (conversations) {
+      @for (conv of conversations; track conv.id) {
+        <app-conversation-item [conversation]="conv"></app-conversation-item>
+      }
     }
   </div>
   <!-- <app-bottom-navigation></app-bottom-navigation> -->

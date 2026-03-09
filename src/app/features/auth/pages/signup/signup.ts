@@ -67,10 +67,9 @@ export class Signup {
 
     this.authService
       .signUp(email, password)
-      .then((res: any) => {
-        if (res.user) {
-          this.continueToLogin();
-        }
+      .then(async () => {
+        await this.authService.signOut();
+        this.continueToLogin();
       })
       .catch((error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);

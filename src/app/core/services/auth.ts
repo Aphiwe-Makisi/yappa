@@ -4,6 +4,7 @@ import {
   authState,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
   UserCredential,
 } from '@angular/fire/auth';
 
@@ -20,5 +21,9 @@ export class AuthService {
 
   signIn(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  signOut(): Promise<void> {
+    return signOut(this.auth);
   }
 }
