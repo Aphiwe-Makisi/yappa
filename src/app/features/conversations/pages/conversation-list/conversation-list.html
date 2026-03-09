@@ -14,7 +14,7 @@
     <!-- TODO: Future implementation -->
   </div>
   <div class="chat-list">
-    @let conversations = conversations$ | async;
+    @let conversations = conversationsWithUsers$ | async;
 
     @if (conversations) {
       @for (conv of conversations; track conv.id) {
