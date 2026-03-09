@@ -5,8 +5,10 @@ import { OrderListModule } from 'primeng/orderlist';
 import { ConversationItem } from '../../components/conversation-item/conversation-item';
 import { Conversation } from '../../../../core/models/conversation';
 import { BottomNavigation } from '../../../../shared/components/bottom-navigation/bottom-navigation';
-import { AuthService } from '../../../../core/services/auth';
 import { ChatsService } from '../../services/chats';
+import { combineLatest, map, of, switchMap } from 'rxjs';
+import { UserService } from '../../../../core/services/user';
+import { AuthService } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-conversation-list',
@@ -16,5 +18,26 @@ import { ChatsService } from '../../services/chats';
 })
 export class ConversationList {
   chatsService: ChatsService = inject(ChatsService);
-  conversations$ = this.chatsService.getUserConversations();
+  userService: UserService = inject(UserService);
+  authService: AuthService = inject(AuthService);
+
+  conversationsWithUsers$ = combineLatest([
+    this.authService.uid$,
+    this.chatsService.getUserConversations(),
+  ]).pipe(
+    switchMap(([uid, convs]) => {
+      if (!convs.length) return of([]);
+
+      const streams = convs.map((conv) => {
+        const otherUid = conv.participants.find((id: string) => id !== uid);
+        if (!otherUid) return of({ ...conv, otherUser: null });
+
+        return this.userService
+          .getUser(otherUid)
+          .pipe(map((user) => ({ ...conv, otherUser: user })));
+      });
+
+      return combineLatest(streams);
+    }),
+  );
 }

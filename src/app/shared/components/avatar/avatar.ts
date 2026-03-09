@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Conversation } from '../../../core/models/conversation';
+import { displayInitials } from '../../utils';
 
 @Component({
   selector: 'app-avatar',
@@ -9,4 +10,8 @@ import { Conversation } from '../../../core/models/conversation';
 })
 export class Avatar {
   @Input() conversation!: Conversation;
+
+  displayName(name: string): string {
+    return displayInitials(name);
+  }
 }

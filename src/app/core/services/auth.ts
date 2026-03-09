@@ -7,6 +7,7 @@ import {
   signOut,
   UserCredential,
 } from '@angular/fire/auth';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ import {
 export class AuthService {
   private auth = inject(Auth);
   currentUser$ = authState(this.auth);
+  uid$ = this.currentUser$.pipe(map((user) => user?.uid));
 
   signUp(email: string, password: string): Promise<UserCredential> {
     return createUserWithEmailAndPassword(this.auth, email, password);

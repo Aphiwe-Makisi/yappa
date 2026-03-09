@@ -3,7 +3,7 @@
     @if (conversation.avatar) {
       <img src="" alt="" />
     } @else {
-      <p>AM</p>
+      <b>{{ displayName(conversation.otherUser?.displayName ?? '') }}</b>
     }
   </div>
   <span class="indicator"></span>
