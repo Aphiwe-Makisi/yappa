@@ -1,0 +1,22 @@
+<div class="wrapper flex-column">
+  <div class="header flex-row">
+    <span class="title flex-row">
+      <div class="icon-wrapper">
+        <i class="pi pi-comment" style="font-size: 2rem"></i>
+      </div>
+      <h2>Chats</h2>
+    </span>
+    <p-button icon="pi pi-plus" [rounded]="true" />
+  </div>
+  <hr />
+  <!-- TODO: Implement search in next phase -->
+  <div class="online-now">
+    <!-- TODO: Future implementation -->
+  </div>
+  <div class="chat-list">
+    @for (conversation of conversations(); track conversation.id) {
+      <app-conversation-item [conversation]="conversation"></app-conversation-item>
+    }
+  </div>
+  <!-- <app-bottom-navigation></app-bottom-navigation> -->
+</div>

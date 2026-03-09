@@ -1,0 +1,35 @@
+.wrapper {
+  padding: 0;
+  gap: 10px;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.title {
+  align-items: center;
+  gap: 10px;
+}
+
+.header {
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+hr {
+  padding: 0;
+  margin: 0;
+}
+
+.chat-list {
+  flex: 1;
+  gap: 2px;
+  overflow: scroll;
+}

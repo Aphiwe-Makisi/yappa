@@ -1,0 +1,54 @@
+.chat-item {
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+  padding: 20px;
+}
+
+.chat-item:hover {
+  background-color: rgba(235, 235, 235, 0.123);
+  border-radius: 8px;
+}
+
+.main-content {
+  flex: 1;
+  gap: 8px;
+}
+
+.last-message-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.last-message {
+  color: grey;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-data {
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.message-count {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}

@@ -14,6 +14,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 const MyPreset = definePreset(Aura, {
   semantic: {
