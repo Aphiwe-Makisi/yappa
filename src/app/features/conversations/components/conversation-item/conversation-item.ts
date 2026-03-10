@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Conversation } from '../../../../core/models/conversation';
 import { CommonModule } from '@angular/common';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
-import { FirestoreDatePipe } from '../../../../shared/firestore-date.pipe';
+import { FirestoreDatePipe } from '../../../../shared/pipes/firestore-date.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conversation-item',
@@ -12,4 +13,10 @@ import { FirestoreDatePipe } from '../../../../shared/firestore-date.pipe';
 })
 export class ConversationItem {
   @Input() conversation!: Conversation;
+
+  router: Router = inject(Router);
+
+  openConversation(): void {
+    this.router.navigateByUrl(`/conversations/${this.conversation.id}`);
+  }
 }

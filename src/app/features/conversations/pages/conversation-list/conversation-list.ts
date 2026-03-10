@@ -9,6 +9,7 @@ import { ChatsService } from '../../services/chats';
 import { combineLatest, map, of, switchMap } from 'rxjs';
 import { UserService } from '../../../../core/services/user';
 import { AuthService } from '../../../../core/services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conversation-list',
@@ -20,6 +21,7 @@ export class ConversationList {
   chatsService: ChatsService = inject(ChatsService);
   userService: UserService = inject(UserService);
   authService: AuthService = inject(AuthService);
+  router: Router = inject(Router);
 
   conversationsWithUsers$ = combineLatest([
     this.authService.uid$,

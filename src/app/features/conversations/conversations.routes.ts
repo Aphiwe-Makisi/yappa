@@ -10,4 +10,12 @@ export const CONVERSATIONS_ROUTES: Routes = [
         (m) => m.ConversationList,
       ),
   },
+  {
+    path: ':conversationId',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../conversations/pages/conversation-view/conversation-view').then(
+        (m) => m.ConversationView,
+      ),
+  },
 ];
