@@ -1,4 +1,17 @@
+.container {
+  height: 100%;
+}
+
 .messages {
   flex: 1;
   overflow: scroll;
+}
+
+form.flex-row {
+  gap: 10px;
+}
+
+.inputs {
+  padding: 15px;
+  border-top: 1px solid var(--color-text-muted);
 }

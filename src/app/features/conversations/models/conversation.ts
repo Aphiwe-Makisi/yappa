@@ -9,5 +9,6 @@ export interface Conversation {
   lastMessage: string;
   lastMessageTime: { seconds: number; nanoseconds: number } | Timestamp | null;
   unreadCount: number;
+  isOnline: boolean;
   otherUser?: UserProfile | null;
 }

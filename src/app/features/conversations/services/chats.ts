@@ -13,7 +13,6 @@ import {
 import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 import { Conversation } from '../models/conversation';
 import { UserService } from '../../../core/services/user';
-import { MessagesService } from './messages';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,6 @@ export class ChatsService {
   private firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
   private userService: UserService = inject(UserService);
-  private messageService: MessagesService = inject(MessagesService);
 
   getUserConversations(): Observable<Conversation[]> {
     const uid = this.auth.currentUser?.uid;
@@ -55,16 +53,15 @@ export class ChatsService {
     );
   }
 
-  getConversationWithMessages(uid: string, conversationId: string): Observable<any> {
-    return combineLatest([
-      this.getConversation(conversationId),
-      this.messageService.getMessages(conversationId),
-    ]).pipe(
-      switchMap(([conv, messages]) => {
-        const otherUid = conv.participants.find((id: string) => id !== uid) ?? '';
+  getConversationWithUser(conversationId: string, uid: string): Observable<Conversation> {
+    return this.getConversation(conversationId).pipe(
+      switchMap((conv) => {
+        const otherUid = conv.participants.find((id: string) => id !== uid);
+        if (!otherUid) return of({ ...conv, otherUser: null });
+
         return this.userService
           .getUser(otherUid)
-          .pipe(map((otherUser) => ({ ...conv, messages, otherUser })));
+          .pipe(map((user) => ({ ...conv, otherUser: user })));
       }),
     );
   }
