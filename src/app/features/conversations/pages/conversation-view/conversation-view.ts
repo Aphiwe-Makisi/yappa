@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Observable, switchMap, take } from 'rxjs';
+import { combineLatest, map, Observable, of, switchMap, take } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth';
 import { ChatsService } from '../../services/chats';
 import { CommonModule } from '@angular/common';
@@ -39,6 +39,7 @@ export class ConversationView {
 
   ngOnInit() {
     this.initForm();
+    this.updateUnreadCount();
   }
 
   initForm(): void {
@@ -52,11 +53,18 @@ export class ConversationView {
 
     const message = this.form.get('message')?.value;
 
+    const payload = {
+      lastMessage: message,
+    };
+
     combineLatest([this.authService.uid$, this.conversationId$])
       .pipe(
         take(1),
         switchMap(([uid, conversationId]) =>
-          this.messageService.sendMessage(conversationId, { senderId: uid ?? '', text: message }),
+          this.messageService.sendMessage(conversationId, uid ?? '', {
+            senderId: uid ?? '',
+            text: message,
+          }),
         ),
       )
       .subscribe({
@@ -64,5 +72,19 @@ export class ConversationView {
         // TODO: show error toastr
         error: (err) => console.error('Failed to send:', err),
       });
+  }
+
+  updateUnreadCount(): void {
+    combineLatest([this.authService.uid$, this.conversation$])
+      .pipe(
+        take(1),
+        switchMap(([uid, conv]) => {
+          if (conv?.lastMessageSenderId !== uid) {
+            this.chatService.resetUnreadCount(conv?.id ?? '');
+          }
+          return of(null);
+        }),
+      )
+      .subscribe();
   }
 }

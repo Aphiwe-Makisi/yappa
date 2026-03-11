@@ -9,8 +9,11 @@ import {
   getDoc,
   doc,
   docData,
+  updateDoc,
+  serverTimestamp,
+  increment,
 } from '@angular/fire/firestore';
-import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
+import { combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
 import { Conversation } from '../models/conversation';
 import { UserService } from '../../../core/services/user';
 
@@ -64,5 +67,15 @@ export class ChatsService {
           .pipe(map((user) => ({ ...conv, otherUser: user })));
       }),
     );
+  }
+
+  updateConversation(conversationId: string, data: any): Observable<any> {
+    const convRef = doc(this.firestore, `conversations/${conversationId}`);
+    return from(updateDoc(convRef, data));
+  }
+
+  resetUnreadCount(conversationId: string): Observable<any> {
+    const convRef = doc(this.firestore, `conversations/${conversationId}`);
+    return from(updateDoc(convRef, { unreadCount: 0 }));
   }
 }

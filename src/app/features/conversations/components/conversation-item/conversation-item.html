@@ -9,8 +9,14 @@
   </div>
   <span class="meta-data flex-column">
     <small>{{ conversation.lastMessageTime | firestoreDate | date: 'HH:mm' }}</small>
-    <small class="message-count" [ngClass]="conversation.unreadCount ? 'show' : 'hide'">{{
-      conversation.unreadCount
-    }}</small>
+    <small
+      class="message-count"
+      [ngClass]="
+        conversation.unreadCount && conversation.lastMessageSenderId === conversation.otherUser?.uid
+          ? 'show'
+          : 'hide'
+      "
+      >{{ conversation.unreadCount }}</small
+    >
   </span>
 </div>

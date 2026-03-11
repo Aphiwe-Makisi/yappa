@@ -8,6 +8,7 @@ export interface Conversation {
   participants: string[];
   lastMessage: string;
   lastMessageTime: { seconds: number; nanoseconds: number } | Timestamp | null;
+  lastMessageSenderId: string | null;
   unreadCount: number;
   isOnline: boolean;
   otherUser?: UserProfile | null;
