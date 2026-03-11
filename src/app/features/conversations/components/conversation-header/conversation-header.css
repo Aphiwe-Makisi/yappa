@@ -1,0 +1,14 @@
+.header.flex-row {
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid var(--color-text-muted);
+}
+
+.user-details {
+  gap: 5px;
+}
+
+small {
+  color: var(--color-text-muted);
+}
