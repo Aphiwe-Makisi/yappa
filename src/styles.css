@@ -12,6 +12,8 @@
     --p-button-success-background: var(--color-primary);
   --p-button-success-hover-background: red;
   --p-primary-color: var(--color-primary);
+
+  --online: rgb(2, 202, 2);
 }
 
 * {

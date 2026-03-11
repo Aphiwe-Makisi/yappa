@@ -1,10 +1,12 @@
 <div class="avatar flex-row">
   <div class="image">
-    @if (conversation.avatar) {
+    @if (conversation.otherUser?.photoURL) {
       <img src="" alt="" />
     } @else {
       <b>{{ displayName(conversation.otherUser?.displayName ?? '') }}</b>
     }
   </div>
-  <span class="indicator"></span>
+  @if (conversation.otherUser?.isOnline) {
+    <span class="indicator"></span>
+  }
 </div>

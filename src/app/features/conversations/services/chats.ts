@@ -1,20 +1,71 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { collection, Firestore, query, where, collectionData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { Conversation } from '../../../core/models/conversation';
+import {
+  collection,
+  Firestore,
+  query,
+  where,
+  collectionData,
+  getDoc,
+  doc,
+  docData,
+} from '@angular/fire/firestore';
+import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
+import { Conversation } from '../models/conversation';
+import { UserService } from '../../../core/services/user';
+import { MessagesService } from './messages';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
-  firestore: Firestore = inject(Firestore);
-  auth: Auth = inject(Auth);
+  private firestore: Firestore = inject(Firestore);
+  private auth: Auth = inject(Auth);
+  private userService: UserService = inject(UserService);
+  private messageService: MessagesService = inject(MessagesService);
 
   getUserConversations(): Observable<Conversation[]> {
     const uid = this.auth.currentUser?.uid;
     const convRef = collection(this.firestore, 'conversations');
     const q = query(convRef, where('participants', 'array-contains', uid));
     return collectionData(q, { idField: 'id' }) as Observable<Conversation[]>;
+  }
+
+  getConversation(id: string): Observable<Conversation> {
+    const convRef = doc(this.firestore, `conversations/${id}`);
+    return docData(convRef, { idField: 'id' }) as Observable<Conversation>;
+  }
+
+  getConversationsWithUsers(uid: string): Observable<Conversation[]> {
+    return this.getUserConversations().pipe(
+      switchMap((convs) => {
+        if (!convs.length) return of([]);
+
+        const streams = convs.map((conv) => {
+          const otherUid = conv.participants.find((id: string) => id !== uid);
+          if (!otherUid) return of({ ...conv, otherUser: null });
+
+          return this.userService
+            .getUser(otherUid)
+            .pipe(map((user) => ({ ...conv, otherUser: user })));
+        });
+
+        return combineLatest(streams);
+      }),
+    );
+  }
+
+  getConversationWithMessages(uid: string, conversationId: string): Observable<any> {
+    return combineLatest([
+      this.getConversation(conversationId),
+      this.messageService.getMessages(conversationId),
+    ]).pipe(
+      switchMap(([conv, messages]) => {
+        const otherUid = conv.participants.find((id: string) => id !== uid) ?? '';
+        return this.userService
+          .getUser(otherUid)
+          .pipe(map((otherUser) => ({ ...conv, messages, otherUser })));
+      }),
+    );
   }
 }

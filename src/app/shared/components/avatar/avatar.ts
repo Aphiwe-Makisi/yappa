@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Conversation } from '../../../core/models/conversation';
+import { Conversation } from '../../../features/conversations/models/conversation';
 import { displayInitials } from '../../utils';
 
 @Component({

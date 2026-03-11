@@ -23,23 +23,7 @@ export class ConversationList {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
 
-  conversationsWithUsers$ = combineLatest([
-    this.authService.uid$,
-    this.chatsService.getUserConversations(),
-  ]).pipe(
-    switchMap(([uid, convs]) => {
-      if (!convs.length) return of([]);
-
-      const streams = convs.map((conv) => {
-        const otherUid = conv.participants.find((id: string) => id !== uid);
-        if (!otherUid) return of({ ...conv, otherUser: null });
-
-        return this.userService
-          .getUser(otherUid)
-          .pipe(map((user) => ({ ...conv, otherUser: user })));
-      });
-
-      return combineLatest(streams);
-    }),
+  conversationsWithUsers$ = this.authService.uid$.pipe(
+    switchMap((uid) => this.chatsService.getConversationsWithUsers(uid ?? '')),
   );
 }

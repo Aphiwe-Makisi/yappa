@@ -5,5 +5,6 @@ export interface UserProfile {
   username?: string;
   bio?: string;
   photoURL?: string;
+  isOnline?: boolean;
   createdAt?: any;
 }

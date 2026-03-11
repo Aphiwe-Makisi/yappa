@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Conversation } from '../../../../core/models/conversation';
+import { Conversation } from '../../models/conversation';
 import { CommonModule } from '@angular/common';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { FirestoreDatePipe } from '../../../../shared/pipes/firestore-date.pipe';

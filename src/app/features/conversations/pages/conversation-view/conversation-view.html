@@ -1,6 +1,9 @@
-<div class="wrapper flex-column">
+<div class="container">
+  @let conv = conversation$ | async;
   <!-- header -->
-  <div class="flex-row">
-    <p-button icon="pi pi-arrow-left" [rounded]="true" [text]="true" (onClick)="back()" />
+  <app-conversation-header [conv]="conv"></app-conversation-header>
+  <div class="wrapper flex-column">
+    <div class="messages"></div>
+    <div class="inputs"></div>
   </div>
 </div>

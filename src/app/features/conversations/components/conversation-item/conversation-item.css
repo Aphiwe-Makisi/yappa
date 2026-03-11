@@ -1,7 +1,7 @@
 .chat-item {
   cursor: pointer;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
   padding: 20px;
 }
 
