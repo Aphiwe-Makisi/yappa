@@ -6,7 +6,16 @@
       </div>
       <h2>Chats</h2>
     </span>
-    <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" />
+    <div class="action-buttons">
+      <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" />
+      <p-button
+        (onClick)="logout()"
+        icon="pi pi-sign-out"
+        [rounded]="true"
+        [text]="true"
+        severity="danger"
+      />
+    </div>
   </div>
   <div class="wrapper flex-column">
     <!-- TODO: Implement search in next phase -->

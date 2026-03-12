@@ -24,4 +24,18 @@ export class ConversationList {
   conversationsWithUsers$ = this.authService.uid$.pipe(
     switchMap((uid) => this.chatsService.getConversationsWithUsers(uid ?? '')),
   );
+
+  logout(): void {
+    console.log('Clicked');
+
+    this.authService
+      .signOut()
+      .then(() => {
+        this.router.navigateByUrl('/');
+      })
+      .catch((error) => {
+        // TODO: handle an error here
+        console.log('Error ', error);
+      });
+  }
 }
