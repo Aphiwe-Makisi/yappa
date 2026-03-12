@@ -4,14 +4,24 @@ import { ButtonModule } from 'primeng/button';
 import { OrderListModule } from 'primeng/orderlist';
 import { ConversationItem } from '../../components/conversation-item/conversation-item';
 import { ChatsService } from '../../services/chats';
-import { switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  concatMap,
+  filter,
+  finalize,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { UserService } from '../../../../core/services/user';
 import { AuthService } from '../../../../core/services/auth';
 import { Router } from '@angular/router';
+import { SkeletonLoader } from '../../components/skeleton-loader/skeleton-loader';
 
 @Component({
   selector: 'app-conversation-list',
-  imports: [CommonModule, ButtonModule, OrderListModule, ConversationItem],
+  imports: [CommonModule, ButtonModule, OrderListModule, ConversationItem, SkeletonLoader],
   templateUrl: './conversation-list.html',
   styleUrl: './conversation-list.css',
 })
@@ -22,20 +32,13 @@ export class ConversationList {
   router: Router = inject(Router);
 
   conversationsWithUsers$ = this.authService.uid$.pipe(
-    switchMap((uid) => this.chatsService.getConversationsWithUsers(uid ?? '')),
+    filter((uid): uid is string => !!uid),
+    switchMap((uid) => this.chatsService.getConversationsWithUsers(uid)),
   );
 
   logout(): void {
-    console.log('Clicked');
-
-    this.authService
-      .signOut()
-      .then(() => {
-        this.router.navigateByUrl('/');
-      })
-      .catch((error) => {
-        // TODO: handle an error here
-        console.log('Error ', error);
-      });
+    this.authService.signOut().subscribe({
+      next: () => this.router.navigateByUrl('/'),
+    });
   }
 }

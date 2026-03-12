@@ -24,8 +24,9 @@
     </div>
     <div class="chat-list">
       @let conversations = conversationsWithUsers$ | async;
-
-      @if (conversations) {
+      @if (conversations == null) {
+        <app-skeleton-loader></app-skeleton-loader>
+      } @else {
         @for (conv of conversations; track conv.id) {
           <app-conversation-item [conversation]="conv"></app-conversation-item>
         }

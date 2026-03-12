@@ -6,12 +6,9 @@ import {
   query,
   where,
   collectionData,
-  getDoc,
   doc,
   docData,
   updateDoc,
-  serverTimestamp,
-  increment,
 } from '@angular/fire/firestore';
 import { combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
 import { Conversation } from '../models/conversation';

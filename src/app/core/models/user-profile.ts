@@ -6,5 +6,6 @@ export interface UserProfile {
   bio?: string;
   photoURL?: string;
   isOnline?: boolean;
+  lastSeen?: any;
   createdAt?: any;
 }

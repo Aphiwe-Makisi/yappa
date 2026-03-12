@@ -1,4 +1,9 @@
 <div class="wrapper">
+  @if (authService.loading | async) {
+    <app-loading-overlay [visible]="true"></app-loading-overlay>
+  } @else {
+    <app-loading-overlay [visible]="false"></app-loading-overlay>
+  }
   <app-logo></app-logo>
   <div class="">
     <h2>Welcome back</h2>

@@ -13,6 +13,7 @@ import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 import { User } from '@angular/fire/auth';
 import { serverTimestamp } from '@angular/fire/firestore';
 import { UserProfile } from '../../../../core/models/user-profile';
+import { LoadingOverlay } from '../../../../shared/components/loading-overlay/loading-overlay';
 
 @Component({
   selector: 'app-signin',
@@ -24,6 +25,7 @@ import { UserProfile } from '../../../../core/models/user-profile';
     ButtonModule,
     InputTextModule,
     RouterLink,
+    LoadingOverlay,
   ],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
@@ -53,14 +55,14 @@ export class Signin {
   login() {
     const email = sanitisedUserInput(this.form.get('email')?.value);
     const password = sanitisedUserInput(this.form.get('password')?.value);
-    this.authService
-      .signIn(email, password)
-      .then((res: any) => {
+    this.authService.signIn(email, password).subscribe({
+      next: (res: any) => {
         this.continueToApp(res.user);
-      })
-      .catch((error: any) => {
+      },
+      error: (error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);
-      });
+      },
+    });
   }
 
   continueToApp(user: User): void {

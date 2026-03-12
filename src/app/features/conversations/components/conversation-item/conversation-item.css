@@ -6,7 +6,7 @@
 }
 
 .chat-item:hover {
-  background-color: var(--p-primary-50);
+  background-color: var(--p-surface-600);
 }
 
 .main-content {
@@ -38,7 +38,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background-color: var(--p-success-500);
   display: flex;
   justify-content: center;
   align-items: center;

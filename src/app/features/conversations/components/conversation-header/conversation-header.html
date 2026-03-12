@@ -4,7 +4,9 @@
     <app-avatar [conversation]="conv"></app-avatar>
     <div class="flex-column user-details">
       <h4>{{ conv.otherUser?.displayName }}</h4>
-      <small>{{ conv.otherUser?.isOnline ? 'Online' : 'Offline' }}</small>
+      <small>{{
+        conv.otherUser?.isOnline ? 'Online' : 'Last seen: ' + (conv.otherUser?.lastSeen | chatDate)
+      }}</small>
     </div>
   } @else {
     <p>Loading ...</p>
