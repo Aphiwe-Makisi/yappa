@@ -10,10 +10,18 @@ import { Conversation } from '../../models/conversation';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MessageBubble } from '../../components/message-bubble/message-bubble';
 
 @Component({
   selector: 'app-conversation-view',
-  imports: [CommonModule, ConversationHeader, InputTextModule, ButtonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ConversationHeader,
+    InputTextModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    MessageBubble,
+  ],
   templateUrl: './conversation-view.html',
   styleUrl: './conversation-view.css',
 })

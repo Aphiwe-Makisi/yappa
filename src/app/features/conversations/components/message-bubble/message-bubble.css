@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  width: 100%;
+}
+
+.container {
+  padding: 10px;
+  border-radius: 8px;
+  gap: 5px;
+  width: fit-content;
+  max-width: 70%;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.incoming-message {
+  margin-right: auto;
+  background-color: var(--p-surface-100);
+}
+
+.outgoing-message {
+  margin-left: auto;
+  background-color: var(--p-primary-100);
+}
+
+.msg-metadata {
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* TODO: remove visibility property, Using this for the UI. */
+.message-status {
+  visibility: hidden;
+}
+
+small {
+  color: var(--color-text-muted);
+}
