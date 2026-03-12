@@ -8,7 +8,7 @@
     </div>
   </div>
   <span class="meta-data flex-column">
-    <small>{{ conversation.lastMessageTime | firestoreDate | date: 'HH:mm' }}</small>
+    <small>{{ conversation.lastMessageTime | chatDate }}</small>
     <small
       class="message-count"
       [ngClass]="

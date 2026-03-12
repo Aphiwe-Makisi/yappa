@@ -5,7 +5,8 @@
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background-color: var(--p-primary-100);
+  color: var(--p-surface-700);
 }
 
 .indicator {
@@ -15,5 +16,5 @@
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background-color: var(--online);
+  background-color: var(--p-success-600);
 }

@@ -6,8 +6,7 @@
 }
 
 .chat-item:hover {
-  background-color: rgba(235, 235, 235, 0.123);
-  border-radius: 8px;
+  background-color: var(--p-primary-50);
 }
 
 .main-content {
@@ -22,7 +21,7 @@
 }
 
 .last-message {
-  color: grey;
+  color: var(--p-surface-500);
   width: 200px;
   white-space: nowrap;
   overflow: hidden;

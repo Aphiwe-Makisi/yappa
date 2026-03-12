@@ -1,4 +1,4 @@
-<div class="wrapper flex-column">
+<div class="container">
   <div class="header flex-row">
     <span class="title flex-row">
       <div class="icon-wrapper">
@@ -6,21 +6,22 @@
       </div>
       <h2>Chats</h2>
     </span>
-    <p-button icon="pi pi-plus" [rounded]="true" />
+    <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" />
   </div>
-  <hr />
-  <!-- TODO: Implement search in next phase -->
-  <div class="online-now">
-    <!-- TODO: Future implementation -->
-  </div>
-  <div class="chat-list">
-    @let conversations = conversationsWithUsers$ | async;
+  <div class="wrapper flex-column">
+    <!-- TODO: Implement search in next phase -->
+    <div class="online-now">
+      <!-- TODO: Future implementation -->
+    </div>
+    <div class="chat-list">
+      @let conversations = conversationsWithUsers$ | async;
 
-    @if (conversations) {
-      @for (conv of conversations; track conv.id) {
-        <app-conversation-item [conversation]="conv"></app-conversation-item>
+      @if (conversations) {
+        @for (conv of conversations; track conv.id) {
+          <app-conversation-item [conversation]="conv"></app-conversation-item>
+        }
       }
-    }
+    </div>
+    <!-- <app-bottom-navigation></app-bottom-navigation> -->
   </div>
-  <!-- <app-bottom-navigation></app-bottom-navigation> -->
 </div>

@@ -7,7 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-primary);
+  background-color: var(--p-primary-200);
+  color: var(--p-surface-700);
   padding: 8px;
   border-radius: 8px;
 }
@@ -18,9 +19,10 @@
 }
 
 .header {
-  padding: 20px;
+  padding: 10px 15px;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid var(--p-primary-300);
 }
 
 hr {

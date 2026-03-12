@@ -14,13 +14,15 @@
 }
 
 .incoming-message {
+  background-color: var(--p-primary-200);
+  color: var(--p-surface-700);
   margin-right: auto;
-  background-color: var(--p-surface-100);
 }
 
 .outgoing-message {
+  background-color: var(--p-success-200);
+  color: var(--p-surface-700);
   margin-left: auto;
-  background-color: var(--p-primary-100);
 }
 
 .msg-metadata {
@@ -34,5 +36,5 @@
 }
 
 small {
-  color: var(--color-text-muted);
+  color: var(--p-surface-600);
 }
