@@ -14,7 +14,7 @@ import { PasswordModule } from 'primeng/password';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { ButtonModule } from 'primeng/button';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Logo } from '../../../../shared/components/logo/logo';
 @Component({
   selector: 'app-signup',
@@ -38,6 +38,7 @@ export class Signup {
 
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
+  router: Router = inject(Router);
 
   ngOnInit() {
     this.initForm();
@@ -66,9 +67,9 @@ export class Signup {
 
     this.authService
       .signUp(email, password)
-      .then((res: any) => {
-        // TODO: create a profile using the method in profile service
-        console.log(res.user);
+      .then(async () => {
+        await this.authService.signOut();
+        this.continueToLogin();
       })
       .catch((error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);
@@ -77,5 +78,9 @@ export class Signup {
 
   comparePasswords(password: string, confirmPassword: string): boolean {
     return password === confirmPassword;
+  }
+
+  continueToLogin(): void {
+    this.router.navigateByUrl('/auth/login');
   }
 }

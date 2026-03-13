@@ -31,3 +31,10 @@ export function getFieldError(control: AbstractControl | null): string {
 
   return 'Invalid field';
 }
+
+export function displayInitials(displayName: string): string {
+  if (!displayName) return '';
+  const splitName = displayName.trim().split(' ');
+  if (splitName.length === 1) return splitName[0][0].toUpperCase();
+  return `${splitName[0][0]}${splitName[1][0]}`.toUpperCase();
+}

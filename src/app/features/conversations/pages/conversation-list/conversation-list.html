@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="header flex-row">
+    <span class="title flex-row">
+      <div class="icon-wrapper">
+        <i class="pi pi-comment" style="font-size: 2rem"></i>
+      </div>
+      <h2>Chats</h2>
+    </span>
+    <div class="action-buttons">
+      <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" />
+      <p-button
+        (onClick)="logout()"
+        icon="pi pi-sign-out"
+        [rounded]="true"
+        [text]="true"
+        severity="danger"
+      />
+    </div>
+  </div>
+  <div class="wrapper flex-column">
+    <!-- TODO: Implement search in next phase -->
+    <div class="online-now">
+      <!-- TODO: Future implementation -->
+    </div>
+    <div class="chat-list">
+      @let conversations = conversationsWithUsers$ | async;
+      @if (conversations == null) {
+        <app-skeleton-loader></app-skeleton-loader>
+      } @else {
+        @for (conv of conversations; track conv.id) {
+          <app-conversation-item [conversation]="conv"></app-conversation-item>
+        }
+      }
+    </div>
+    <!-- <app-bottom-navigation></app-bottom-navigation> -->
+  </div>
+</div>

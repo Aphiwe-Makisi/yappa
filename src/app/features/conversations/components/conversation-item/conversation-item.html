@@ -1,0 +1,22 @@
+<div class="chat-item flex-row" (click)="openConversation()">
+  <app-avatar [conversation]="conversation"></app-avatar>
+  <div class="main-content flex-column">
+    <strong class="display-name">{{ conversation.otherUser?.displayName }}</strong>
+    <div class="last-message-wrapper">
+      <!-- <i class="pi pi-clock"></i> -->
+      <small class="last-message">{{ conversation.lastMessage }}</small>
+    </div>
+  </div>
+  <span class="meta-data flex-column">
+    <small>{{ conversation.lastMessageTime | chatDate }}</small>
+    <small
+      class="message-count"
+      [ngClass]="
+        conversation.unreadCount && conversation.lastMessageSenderId === conversation.otherUser?.uid
+          ? 'show'
+          : 'hide'
+      "
+      >{{ conversation.unreadCount }}</small
+    >
+  </span>
+</div>

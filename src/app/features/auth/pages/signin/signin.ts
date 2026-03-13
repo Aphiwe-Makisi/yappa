@@ -8,7 +8,12 @@ import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
+import { UserService } from '../../../../core/services/user';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
+import { User } from '@angular/fire/auth';
+import { serverTimestamp } from '@angular/fire/firestore';
+import { UserProfile } from '../../../../core/models/user-profile';
+import { LoadingOverlay } from '../../../../shared/components/loading-overlay/loading-overlay';
 
 @Component({
   selector: 'app-signin',
@@ -20,6 +25,7 @@ import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
     ButtonModule,
     InputTextModule,
     RouterLink,
+    LoadingOverlay,
   ],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
@@ -30,6 +36,7 @@ export class Signin {
   errorMessage: string = '';
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
+  userService: UserService = inject(UserService);
   router: Router = inject(Router);
 
   getFieldError = getFieldError;
@@ -48,19 +55,35 @@ export class Signin {
   login() {
     const email = sanitisedUserInput(this.form.get('email')?.value);
     const password = sanitisedUserInput(this.form.get('password')?.value);
-    this.authService
-      .signIn(email, password)
-      .then((res: any) => {
-        // if (res.uid) {
-        this.continueToApp();
-        // }
+    this.authService.signIn(email, password).subscribe({
+      next: (res: any) => {
+        this.continueToApp(res.user);
+      },
+      error: (error: any) => {
+        this.errorMessage = handleFirebaseAuthError(error.code);
+      },
+    });
+  }
+
+  continueToApp(user: User): void {
+    const data = this.buildUserData(user);
+    this.userService
+      .ensureUserExists(user, data)
+      .then(() => {
+        this.router.navigateByUrl('/auth/conversations');
       })
       .catch((error: any) => {
-        this.errorMessage = handleFirebaseAuthError(error.code);
+        console.log(error);
       });
   }
 
-  continueToApp(): void {
-    this.router.navigateByUrl('/auth/conversations');
+  buildUserData(user: User): UserProfile {
+    return {
+      uid: user.uid,
+      email: user.email ?? '',
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
+      createdAt: serverTimestamp(),
+    };
   }
 }

@@ -1,0 +1,21 @@
+<div class="container flex-column">
+  @let conv = conversation$ | async;
+  @let messages = messages$ | async;
+  <!-- header -->
+  @if (conv) {
+    <app-conversation-header [conv]="conv"></app-conversation-header>
+    <div class="wrapper flex-column">
+      @for (msg of messages ?? []; track msg.id) {
+        <div [ngClass]="msg.senderId === conv.otherUser?.uid ? 'incoming' : 'outgoing'">
+          <app-message-bubble [message]="msg" [conversation]="conv"></app-message-bubble>
+        </div>
+      }
+    </div>
+  }
+  <div class="inputs">
+    <form [formGroup]="form" (ngSubmit)="send()" class="flex-row">
+      <input type="text" pInputText formControlName="message" fluid />
+      <p-button type="submit" icon="pi pi-send" [rounded]="true" [disabled]="form.invalid" />
+    </form>
+  </div>
+</div>

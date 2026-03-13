@@ -1,0 +1,20 @@
+.avatar {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: var(--p-primary-100);
+  color: var(--p-surface-700);
+}
+
+.indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--p-success-600);
+}

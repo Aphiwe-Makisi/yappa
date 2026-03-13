@@ -1,0 +1,36 @@
+.container {
+  height: 100%;
+  position: relative;
+}
+
+.wrapper {
+  flex: 1;
+  gap: 5px;
+  overflow: scroll;
+  padding: 10px 15px;
+}
+
+form.flex-row {
+  gap: 10px;
+}
+
+.inputs {
+  padding: 15px;
+  border-top: 1px solid var(--p-primary-300);
+}
+
+.incoming,
+.outgoing {
+  display: flex;
+  width: 100%;
+}
+
+.incoming {
+  display: flex;
+  justify-content: flex-start; /* left */
+}
+
+.outgoing {
+  display: flex;
+  justify-content: flex-end; /* right */
+}
