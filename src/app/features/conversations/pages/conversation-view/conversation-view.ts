@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Observable, of, switchMap, take } from 'rxjs';
+import { combineLatest, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth';
 import { ChatsService } from '../../services/chats';
 import { CommonModule } from '@angular/common';
@@ -32,6 +32,8 @@ export class ConversationView {
   private authService: AuthService = inject(AuthService);
   private fb: FormBuilder = inject(FormBuilder);
 
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
+
   conversationId$ = this.route.params.pipe(map((params) => params['conversationId']));
   conversation$: Observable<Conversation | null> = combineLatest([
     this.authService.uid$,
@@ -41,7 +43,12 @@ export class ConversationView {
       this.chatService.getConversationWithUser(conversationId, uid ?? ''),
     ),
   );
-  messages$ = this.conversationId$.pipe(switchMap((id) => this.messageService.getMessages(id)));
+  messages$ = this.conversationId$.pipe(
+    switchMap((id) => this.messageService.getMessages(id)),
+    tap(() => {
+      setTimeout(() => this.scrollToBottom(), 100);
+    }),
+  );
 
   form!: FormGroup;
 
@@ -94,5 +101,12 @@ export class ConversationView {
         }),
       )
       .subscribe();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.messageContainer.nativeElement.scrollTop =
+        this.messageContainer.nativeElement.scrollHeight;
+    } catch (e) {}
   }
 }

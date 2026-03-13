@@ -4,7 +4,7 @@
   <!-- header -->
   @if (conv) {
     <app-conversation-header [conv]="conv"></app-conversation-header>
-    <div class="wrapper flex-column">
+    <div class="wrapper flex-column" #messageContainer>
       @for (msg of messages ?? []; track msg.id) {
         <div [ngClass]="msg.senderId === conv.otherUser?.uid ? 'incoming' : 'outgoing'">
           <app-message-bubble [message]="msg" [conversation]="conv"></app-message-bubble>
