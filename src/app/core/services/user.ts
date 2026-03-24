@@ -1,6 +1,18 @@
 import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { doc, docData, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  collection,
+  collectionData,
+  doc,
+  docData,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { from, Observable } from 'rxjs';
 
@@ -21,11 +33,16 @@ export class UserService {
   }
 
   getUser(uid: string): Observable<UserProfile> {
-    const ref = doc(this.firestore, `users/${uid}`);
     return runInInjectionContext(this.injector, () => {
       const userRef = doc(this.firestore, 'users', uid);
       return docData(userRef, { idField: 'uid' }) as Observable<UserProfile>;
     });
+  }
+
+  getAllUsers(currentUid: string): Observable<UserProfile[]> {
+    const ref = collection(this.firestore, 'users');
+    const q = query(ref, where('uid', '!=', currentUid));
+    return collectionData(q, { idField: 'id' }) as Observable<UserProfile[]>;
   }
 
   updateUser(uid: string, data: any): Observable<any> {

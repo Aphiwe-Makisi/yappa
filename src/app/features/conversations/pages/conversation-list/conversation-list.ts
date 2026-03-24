@@ -36,6 +36,10 @@ export class ConversationList {
     switchMap((uid) => this.chatsService.getConversationsWithUsers(uid)),
   );
 
+  navigateToFriendList(): void {
+    this.router.navigateByUrl('/conversations/new');
+  }
+
   logout(): void {
     this.authService.signOut().subscribe({
       next: () => this.router.navigateByUrl('/'),
