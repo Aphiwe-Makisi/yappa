@@ -39,6 +39,8 @@ export class UserService {
     });
   }
 
+  // TODO: In future we will need to only get users that have
+  // the current user in their friend list
   getAllUsers(currentUid: string): Observable<UserProfile[]> {
     const ref = collection(this.firestore, 'users');
     const q = query(ref, where('uid', '!=', currentUid));
@@ -47,6 +49,6 @@ export class UserService {
 
   updateUser(uid: string, data: any): Observable<any> {
     const ref = doc(this.firestore, `users/${uid}`);
-    return from(updateDoc(ref, data));
+    return from(setDoc(ref, data, { merge: true }));
   }
 }

@@ -9,8 +9,10 @@ import {
   doc,
   docData,
   updateDoc,
+  addDoc,
+  serverTimestamp,
 } from '@angular/fire/firestore';
-import { catchError, combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, combineLatest, from, map, Observable, of, switchMap, take } from 'rxjs';
 import { Conversation } from '../models/conversation';
 import { UserService } from '../../../core/services/user';
 
@@ -34,21 +36,18 @@ export class ChatsService {
     return docData(convRef, { idField: 'id' }) as Observable<Conversation>;
   }
 
+  private withOtherUser(conv: Conversation, uid: string): Observable<Conversation> {
+    const otherUid = conv.participants.find((id: string) => id !== uid);
+    if (!otherUid) return of({ ...conv, otherUser: null });
+    return this.userService.getUser(otherUid).pipe(map((user) => ({ ...conv, otherUser: user })));
+  }
+
   getConversationsWithUsers(uid: string): Observable<Conversation[]> {
     return this.getUserConversations().pipe(
       switchMap((convs) => {
         if (!convs.length) return of([]);
 
-        const streams = convs.map((conv) => {
-          const otherUid = conv.participants.find((id: string) => id !== uid);
-          if (!otherUid) return of({ ...conv, otherUser: null });
-
-          return this.userService
-            .getUser(otherUid)
-            .pipe(map((user) => ({ ...conv, otherUser: user })));
-        });
-
-        return combineLatest(streams);
+        return combineLatest(convs.map((c) => this.withOtherUser(c, uid)));
       }),
     );
   }
@@ -57,13 +56,7 @@ export class ChatsService {
     return this.getConversation(conversationId).pipe(
       switchMap((conv) => {
         if (!conv) return of(null);
-
-        const otherUid = conv.participants.find((id: string) => id !== uid);
-        if (!otherUid) return of({ ...conv, otherUser: null });
-
-        return this.userService
-          .getUser(otherUid)
-          .pipe(map((user) => ({ ...conv, otherUser: user })));
+        return this.withOtherUser(conv, uid);
       }),
       catchError(() => of(null)),
     );
@@ -77,5 +70,42 @@ export class ChatsService {
   resetUnreadCount(conversationId: string): Observable<any> {
     const convRef = doc(this.firestore, `conversations/${conversationId}`);
     return from(updateDoc(convRef, { unreadCount: 0 }));
+  }
+
+  createNewConversation(otherUid: string): Observable<{ id: string }> {
+    const uid = this.auth.currentUser?.uid!;
+
+    if (!uid) {
+      throw new Error('User not authenticated');
+    }
+
+    const ref = collection(this.firestore, 'conversations');
+
+    return this.getUserConversations().pipe(
+      take(1),
+      switchMap((conversations) => {
+        const existing = conversations.find(
+          (c) =>
+            c.participants.length === 2 &&
+            c.participants.includes(uid) &&
+            c.participants.includes(otherUid),
+        );
+
+        if (existing) {
+          return of({ id: existing.id });
+        }
+
+        return from(
+          addDoc(ref, {
+            participants: [uid, otherUid],
+            lastMessage: null,
+            lastMessageTime: null,
+            lastMessageSenderId: null,
+            unreadCount: 0,
+            createdAt: serverTimestamp(),
+          }),
+        ).pipe(map((docRef) => ({ id: docRef.id })));
+      }),
+    );
   }
 }
