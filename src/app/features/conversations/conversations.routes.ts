@@ -11,6 +11,14 @@ export const CONVERSATIONS_ROUTES: Routes = [
       ),
   },
   {
+    path: 'new',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../conversations/pages/new-conversation/new-conversation').then(
+        (m) => m.NewConversation,
+      ),
+  },
+  {
     path: ':conversationId',
     canActivate: [authGuard],
     loadComponent: () =>

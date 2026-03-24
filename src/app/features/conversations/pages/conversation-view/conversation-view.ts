@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, ViewChild, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth';
 import { ChatsService } from '../../services/chats';
 import { CommonModule } from '@angular/common';
@@ -39,6 +39,7 @@ export class ConversationView {
     this.authService.uid$,
     this.conversationId$,
   ]).pipe(
+    filter(([uid, conversationId]) => !!uid && !!conversationId),
     switchMap(([uid, conversationId]) =>
       this.chatService.getConversationWithUser(conversationId, uid ?? ''),
     ),
@@ -67,10 +68,6 @@ export class ConversationView {
     if (this.form.invalid) return;
 
     const message = this.form.get('message')?.value;
-
-    const payload = {
-      lastMessage: message,
-    };
 
     combineLatest([this.authService.uid$, this.conversationId$])
       .pipe(
