@@ -10,7 +10,7 @@ import {
   docData,
   updateDoc,
 } from '@angular/fire/firestore';
-import { combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
 import { Conversation } from '../models/conversation';
 import { UserService } from '../../../core/services/user';
 
@@ -53,9 +53,11 @@ export class ChatsService {
     );
   }
 
-  getConversationWithUser(conversationId: string, uid: string): Observable<Conversation> {
+  getConversationWithUser(conversationId: string, uid: string): Observable<Conversation | null> {
     return this.getConversation(conversationId).pipe(
       switchMap((conv) => {
+        if (!conv) return of(null);
+
         const otherUid = conv.participants.find((id: string) => id !== uid);
         if (!otherUid) return of({ ...conv, otherUser: null });
 
@@ -63,6 +65,7 @@ export class ChatsService {
           .getUser(otherUid)
           .pipe(map((user) => ({ ...conv, otherUser: user })));
       }),
+      catchError(() => of(null)),
     );
   }
 
