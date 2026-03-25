@@ -46,18 +46,19 @@ export class Signup {
 
   initForm(): void {
     this.form = this.fb.group({
-      full_name: ['', Validators.required, Validators.minLength(6)],
+      full_name: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirm_password: ['', Validators.required, Validators.minLength(6)],
+      confirm_password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  register(): any {
+  register(): void {
     const fullname = sanitisedUserInput(this.form.get('full_name')?.value);
     const email = sanitisedUserInput(this.form.get('email')?.value);
     const password = sanitisedUserInput(this.form.get('password')?.value);
     const confirmPassword = sanitisedUserInput(this.form.get('confirm_password')?.value);
+
     const match = this.comparePasswords(password, confirmPassword);
 
     if (!match) {
@@ -67,9 +68,15 @@ export class Signup {
 
     this.authService
       .signUp(email, password)
-      .then(async () => {
-        await this.authService.signOut();
-        this.continueToLogin();
+      .then(() => {
+        this.authService.signOut().subscribe({
+          next: () => {
+            this.continueToLogin();
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
       })
       .catch((error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);

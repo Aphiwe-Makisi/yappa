@@ -7,7 +7,12 @@
       <h2>Chats</h2>
     </span>
     <div class="action-buttons">
-      <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" />
+      <p-button
+        (onClick)="navigateToFriendList()"
+        icon="pi pi-plus"
+        [rounded]="true"
+        severity="secondary"
+      />
       <p-button
         (onClick)="logout()"
         icon="pi pi-sign-out"

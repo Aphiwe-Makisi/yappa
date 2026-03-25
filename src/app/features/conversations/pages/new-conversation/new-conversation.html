@@ -1,1 +1,21 @@
-<p>new-conversation works!</p>
+@let users = users$ | async;
+<div class="container">
+  <div class="header flex-row">
+    <span class="title flex-row">
+      <p-button icon="pi pi-arrow-left" (onClick)="back()" [rounded]="true" severity="secondary" />
+      <div class="icon-wrapper">
+        <i class="pi pi-comment" style="font-size: 2rem"></i>
+      </div>
+      <h2>New Chat</h2>
+    </span>
+    <div class="action-buttons">
+      <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" />
+    </div>
+  </div>
+
+  @for (user of users; track user.uid) {
+    <div (click)="openOrCreateNewConversation(user.uid)">
+      <p>{{ user.displayName }}</p>
+    </div>
+  }
+</div>
