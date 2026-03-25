@@ -4,24 +4,23 @@ import { ButtonModule } from 'primeng/button';
 import { OrderListModule } from 'primeng/orderlist';
 import { ConversationItem } from '../../components/conversation-item/conversation-item';
 import { ChatsService } from '../../services/chats';
-import {
-  BehaviorSubject,
-  combineLatest,
-  concatMap,
-  filter,
-  finalize,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { filter, switchMap } from 'rxjs';
 import { UserService } from '../../../../core/services/user';
 import { AuthService } from '../../../../core/services/auth';
 import { Router } from '@angular/router';
 import { SkeletonLoader } from '../../components/skeleton-loader/skeleton-loader';
+import { NoConversations } from '../../components/no-conversations/no-conversations';
 
 @Component({
   selector: 'app-conversation-list',
-  imports: [CommonModule, ButtonModule, OrderListModule, ConversationItem, SkeletonLoader],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    OrderListModule,
+    ConversationItem,
+    SkeletonLoader,
+    NoConversations,
+  ],
   templateUrl: './conversation-list.html',
   styleUrl: './conversation-list.css',
 })

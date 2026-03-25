@@ -164,7 +164,6 @@ firebase deploy
 
 ### Core Chat Features
 
-- [ ] Start new conversations
 - [ ] Typing indicators
 - [ ] Read receipts
 - [ ] File and image sharing

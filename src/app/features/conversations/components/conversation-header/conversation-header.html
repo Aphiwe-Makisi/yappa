@@ -1,7 +1,7 @@
 <div class="header flex-row">
   <p-button icon="pi pi-arrow-left" [rounded]="true" [text]="true" (onClick)="back()" />
   @if (conv) {
-    <app-avatar [conversation]="conv"></app-avatar>
+    <app-avatar [userProfile]="conv.otherUser"></app-avatar>
     <div class="flex-column user-details">
       <h4>{{ conv.otherUser?.displayName }}</h4>
       <small>{{

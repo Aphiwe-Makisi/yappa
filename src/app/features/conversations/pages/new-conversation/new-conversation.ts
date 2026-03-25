@@ -6,10 +6,12 @@ import { switchMap } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { ChatsService } from '../../services/chats';
+import { Avatar } from '../../../../shared/components/avatar/avatar';
+import { FirestoreDatePipe } from '../../../../shared/pipes/firestore-date.pipe';
 
 @Component({
   selector: 'app-new-conversation',
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, Avatar, FirestoreDatePipe],
   templateUrl: './new-conversation.html',
   styleUrl: './new-conversation.css',
   standalone: true,
