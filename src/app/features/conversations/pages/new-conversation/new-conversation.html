@@ -14,8 +14,14 @@
   </div>
 
   @for (user of users; track user.uid) {
-    <div (click)="openOrCreateNewConversation(user.uid)">
-      <p>{{ user.displayName }}</p>
+    <div class="flex-row friend-wrapper" (click)="openOrCreateNewConversation(user.uid)">
+      <app-avatar [userProfile]="user"></app-avatar>
+      <div class="main-content flex-column">
+        <p>{{ user.displayName }}</p>
+        <small class="online-status">{{
+          user.isOnline ? 'Online' : 'Last seen: ' + (user.lastSeen | firestoreDate | date: 'HH:mm')
+        }}</small>
+      </div>
     </div>
   }
 </div>

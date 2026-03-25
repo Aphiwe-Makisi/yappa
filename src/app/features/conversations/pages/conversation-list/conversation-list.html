@@ -31,6 +31,8 @@
       @let conversations = conversationsWithUsers$ | async;
       @if (conversations == null) {
         <app-skeleton-loader></app-skeleton-loader>
+      } @else if (!conversations.length) {
+        <app-no-conversations></app-no-conversations>
       } @else {
         @for (conv of conversations; track conv.id) {
           <app-conversation-item [conversation]="conv"></app-conversation-item>

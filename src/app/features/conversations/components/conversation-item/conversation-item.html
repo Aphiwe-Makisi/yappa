@@ -1,5 +1,5 @@
 <div class="chat-item flex-row" (click)="openConversation()">
-  <app-avatar [conversation]="conversation"></app-avatar>
+  <app-avatar [userProfile]="conversation.otherUser"></app-avatar>
   <div class="main-content flex-column">
     <strong class="display-name">{{ conversation.otherUser?.displayName }}</strong>
     <div class="last-message-wrapper">

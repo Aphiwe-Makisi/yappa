@@ -35,3 +35,23 @@
   gap: 2px;
   overflow: scroll;
 }
+
+.friend-wrapper {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.friend-wrapper:hover {
+  background-color: var(--p-surface-600);
+}
+
+.flex-column {
+  gap: 0.25rem;
+}
+
+.flex-column small {
+  color: var(--p-surface-400);
+}
