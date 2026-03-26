@@ -5,9 +5,20 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   UserCredential,
 } from '@angular/fire/auth';
-import { BehaviorSubject, finalize, from, map, Observable, switchMap, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  finalize,
+  from,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+} from 'rxjs';
 import { UserService } from './user';
 import { serverTimestamp } from '@angular/fire/firestore';
 
@@ -22,43 +33,47 @@ export class AuthService {
   private _loading$ = new BehaviorSubject<boolean>(false);
   public readonly loading = this._loading$.asObservable();
 
-  signUp(email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  async signUp(email: string, password: string, displayName: string): Promise<UserCredential> {
+    const userCredentials = await createUserWithEmailAndPassword(this.auth, email, password);
+
+    if (userCredentials.user) {
+      await updateProfile(userCredentials.user, { displayName: displayName });
+    }
+
+    return userCredentials;
   }
 
   signIn(email: string, password: string): Observable<UserCredential> {
     this._loading$.next(true);
+
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((cred) =>
-        this.userService
-          .updateUser(cred.user.uid, { isOnline: true })
-          .pipe(map(() => cred))
-          .pipe(finalize(() => this._loading$.next(false))),
+        from(this.userService.ensureUserExists(cred.user)).pipe(
+          switchMap(() =>
+            this.userService.updateUser(cred.user.uid, {
+              isOnline: true,
+              lastSeen: serverTimestamp(),
+            }),
+          ),
+          map(() => cred),
+          finalize(() => this._loading$.next(false)),
+        ),
       ),
     );
   }
 
   signOut(): Observable<void> {
-    return this.currentUser$.pipe(
-      take(1),
-      switchMap((user) => {
-        if (!user) {
-          return from(signOut(this.auth));
-        }
+    const uid = this.auth.currentUser?.uid;
+    if (!uid) return from(signOut(this.auth));
 
-        // Make sure updateUser completes before signing out
-        return this.userService
-          .updateUser(user.uid, {
-            isOnline: false,
-            lastSeen: serverTimestamp(),
-          })
-          .pipe(
-            switchMap(() => {
-              // wrap signOut in from() to convert Promise → Observable
-              return from(signOut(this.auth));
-            }),
-          );
-      }),
-    );
+    return this.userService
+      .updateUser(uid, {
+        isOnline: false,
+        lastSeen: serverTimestamp(),
+      })
+      .pipe(
+        catchError(() => of(null)),
+        switchMap(() => from(signOut(this.auth))),
+      );
   }
 }

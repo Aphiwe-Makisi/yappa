@@ -57,33 +57,11 @@ export class Signin {
     const password = sanitisedUserInput(this.form.get('password')?.value);
     this.authService.signIn(email, password).subscribe({
       next: (res: any) => {
-        this.continueToApp(res.user);
+        this.router.navigateByUrl('/auth/conversations');
       },
       error: (error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);
       },
     });
-  }
-
-  continueToApp(user: User): void {
-    const data = this.buildUserData(user);
-    this.userService
-      .ensureUserExists(user, data)
-      .then(() => {
-        this.router.navigateByUrl('/auth/conversations');
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  }
-
-  buildUserData(user: User): UserProfile {
-    return {
-      uid: user.uid,
-      email: user.email ?? '',
-      displayName: user.displayName ?? '',
-      photoURL: user.photoURL ?? '',
-      createdAt: serverTimestamp(),
-    };
   }
 }
