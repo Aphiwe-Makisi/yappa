@@ -9,6 +9,7 @@ import {
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
   setDoc,
   updateDoc,
   where,
@@ -23,12 +24,20 @@ export class UserService {
   private injector: Injector = inject(Injector);
   firestore: Firestore = inject(Firestore);
 
-  async ensureUserExists(user: User, data: UserProfile): Promise<any> {
+  async ensureUserExists(user: User): Promise<any> {
     const userRef = doc(this.firestore, `users/${user.uid}`);
     const snap = await getDoc(userRef);
 
     if (!snap.exists()) {
-      await setDoc(userRef, data);
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || '',
+        createdAt: serverTimestamp(),
+        isOnline: true,
+        lastSeen: serverTimestamp(),
+      });
     }
   }
 
@@ -49,6 +58,6 @@ export class UserService {
 
   updateUser(uid: string, data: any): Observable<any> {
     const ref = doc(this.firestore, `users/${uid}`);
-    return from(setDoc(ref, data, { merge: true }));
+    return from(updateDoc(ref, data, { merge: true }));
   }
 }

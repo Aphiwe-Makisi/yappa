@@ -67,7 +67,7 @@ export class Signup {
     }
 
     this.authService
-      .signUp(email, password)
+      .signUp(email, password, fullname)
       .then(() => {
         this.authService.signOut().subscribe({
           next: () => {
