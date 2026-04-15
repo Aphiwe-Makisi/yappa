@@ -90,6 +90,7 @@ export class Signup {
   }
 
   continueToLogin(): void {
+    this.form.reset();
     this.router.navigateByUrl('/auth/login');
   }
 }

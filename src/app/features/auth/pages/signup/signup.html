@@ -1,116 +1,113 @@
 <ion-content class="ion-padding">
-  <!-- Header -->
-  <div class="auth-header">
-    <app-logo></app-logo>
-    <h2>Create Account</h2>
-    <p>Start chatting in seconds</p>
-  </div>
+  <div class="auth-container">
+    <!-- Header -->
+    <div class="auth-header">
+      <app-logo></app-logo>
+      <h2>Create Account</h2>
+      <p>Start chatting in seconds</p>
+    </div>
 
-  <!-- Form -->
-  <form [formGroup]="form" (ngSubmit)="register()">
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="register()">
 
-    <!-- Full Name -->
-    <ion-item class="no-padding">
-      <ion-input
-        formControlName="full_name"
-        type="text"
-        label="Full Name"
-        fill="outline"
-        labelPlacement="floating"
-        fill="outline"
-        >
-      </ion-input>
-    </ion-item>
+      <!-- Full Name -->
+      <ion-item class="no-padding">
+        <ion-input
+          formControlName="full_name"
+          type="text"
+          label="Full Name"
+          fill="outline"
+          labelPlacement="floating"
+          fill="outline"
+          >
+        </ion-input>
+      </ion-item>
 
-    @if (getFieldError(form.get('full_name'))) {
-      <small class="error-msg">
-        {{ getFieldError(form.get('full_name')) }}
-      </small>
-    }
-
-    <!-- Email -->
-    <ion-item class="no-padding">
-      <ion-input
-        formControlName="email"
-        type="email"
-        label="Email"
-        labelPlacement="floating"
-        fill="outline"
-        >
-      </ion-input>
-    </ion-item>
-
-    @if (getFieldError(form.get('email'))) {
-      <small class="error-msg">
-        {{ getFieldError(form.get('email')) }}
-      </small>
-    }
-
-    <!-- Password -->
-    <ion-item class="no-padding">
-      <ion-input
-        formControlName="password"
-        type="password"
-        label="Password"
-        labelPlacement="floating"
-        fill="outline"
-        autocomplete="off">
-      </ion-input>
-    </ion-item>
-
-    @if (getFieldError(form.get('password'))) {
-      <small class="error-msg">
-        {{ getFieldError(form.get('password')) }}
-      </small>
-    }
-
-    <!-- Confirm Password -->
-    <ion-item class="no-padding">
-      <ion-input
-        formControlName="confirm_password"
-        type="password"
-        label="Confirm Password"
-        labelPlacement="floating"
-        fill="outline"
-        autocomplete="off">
-      </ion-input>
-    </ion-item>
-
-    @if (getFieldError(form.get('confirm_password'))) {
-      <small class="error-msg">
-        {{ getFieldError(form.get('confirm_password')) }}
-      </small>
-    }
-
-    <!-- General error -->
-    @if (errorMessage) {
-      <small class="error-msg">
-        {{ errorMessage }}
-      </small>
-    }
-
-    <!-- Button -->
-    <ion-button
-      expand="block"
-      type="submit"
-      color="primary"
-      [disabled]="form.invalid">
-
-      @if (authService.loading | async) {
-        <ion-spinner name="circles"></ion-spinner>
-      } @else {
-        Sign Up
+      @if (getFieldError(form.get('full_name'))) {
+        <small class="error-msg">
+          {{ getFieldError(form.get('full_name')) }}
+        </small>
       }
-    </ion-button>
 
-  </form>
+      <!-- Email -->
+      <ion-item class="no-padding">
+        <ion-input
+          formControlName="email"
+          type="email"
+          label="Email"
+          labelPlacement="floating"
+          fill="outline"
+          >
+        </ion-input>
+      </ion-item>
 
-  <!-- Footer -->
-  <div class="page-footer">
-    <p>
-      Already have an account?
-      <a routerLink="/auth/login">Sign In</a>
-    </p>
+      @if (getFieldError(form.get('email'))) {
+        <small class="error-msg">
+          {{ getFieldError(form.get('email')) }}
+        </small>
+      }
+
+      <!-- Password -->
+      <ion-item class="no-padding">
+        <ion-input
+          formControlName="password"
+          type="password"
+          label="Password"
+          labelPlacement="floating"
+          fill="outline"
+          autocomplete="off">
+        </ion-input>
+      </ion-item>
+
+      @if (getFieldError(form.get('password'))) {
+        <small class="error-msg">
+          {{ getFieldError(form.get('password')) }}
+        </small>
+      }
+
+      <!-- Confirm Password -->
+      <ion-item class="no-padding">
+        <ion-input
+          formControlName="confirm_password"
+          type="password"
+          label="Confirm Password"
+          labelPlacement="floating"
+          fill="outline"
+          autocomplete="off">
+        </ion-input>
+      </ion-item>
+
+      @if (getFieldError(form.get('confirm_password'))) {
+        <small class="error-msg">
+          {{ getFieldError(form.get('confirm_password')) }}
+        </small>
+      }
+
+      <!-- General error -->
+      @if (errorMessage) {
+        <small class="error-msg">
+          {{ errorMessage }}
+        </small>
+      }
+
+      <!-- Button -->
+      <ion-button
+        expand="block"
+        type="submit"
+        color="primary"
+        [disabled]="form.invalid">
+
+        @if (authService.loading | async) {
+          <ion-spinner name="circles"></ion-spinner>
+        } @else {
+          Sign Up
+        }
+      </ion-button>
+      
+      <p>
+        Already have an account?
+        <a routerLink="/auth/login">Sign In</a>
+      </p>
+    </form>
   </div>
-
 </ion-content>

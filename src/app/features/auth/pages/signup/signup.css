@@ -17,3 +17,11 @@
   text-align: center;
   margin-top: 20px;
 }
+
+@media (min-width: 768px) {
+  ion-content::part(scroll) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
