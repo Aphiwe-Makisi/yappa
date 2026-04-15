@@ -96,7 +96,11 @@
       color="primary"
       [disabled]="form.invalid">
 
-      Sign Up
+      @if (authService.loading | async) {
+        <ion-spinner name="circles"></ion-spinner>
+      } @else {
+        Sign Up
+      }
     </ion-button>
 
   </form>

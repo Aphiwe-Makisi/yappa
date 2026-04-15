@@ -34,13 +34,21 @@ export class AuthService {
   public readonly loading = this._loading$.asObservable();
 
   async signUp(email: string, password: string, displayName: string): Promise<UserCredential> {
-    const userCredentials = await createUserWithEmailAndPassword(this.auth, email, password);
+    this._loading$.next(true);
 
-    if (userCredentials.user) {
-      await updateProfile(userCredentials.user, { displayName: displayName });
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(this.auth, email, password);
+
+      if (userCredentials.user) {
+        await updateProfile(userCredentials.user, { displayName: displayName })
+      }
+
+      return userCredentials;
+    } catch (error) {
+      throw error
+    } finally {
+      this._loading$.next(false);
     }
-
-    return userCredentials;
   }
 
   signIn(email: string, password: string): Observable<UserCredential> {

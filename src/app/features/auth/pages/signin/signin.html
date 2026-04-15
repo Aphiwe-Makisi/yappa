@@ -1,11 +1,11 @@
 <ion-content class="ion-padding">
 
   <!-- Loading -->
-  @if (authService.loading | async) {
+  <!-- @if (authService.loading | async) {
     <app-loading-overlay [visible]="true"></app-loading-overlay>
   } @else {
     <app-loading-overlay [visible]="false"></app-loading-overlay>
-  }
+  } -->
 
   <!-- Heading -->
   <div class="auth-header">
@@ -70,7 +70,11 @@
       type="submit"
       [disabled]="form.invalid">
 
-      Sign In
+      @if (authService.loading | async) {
+        <ion-spinner name="circles"></ion-spinner>
+      } @else {
+        Sign In
+      }
     </ion-button>
 
     <p>

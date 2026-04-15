@@ -10,11 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
 import { UserService } from '../../../../core/services/user';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
-import { User } from '@angular/fire/auth';
-import { serverTimestamp } from '@angular/fire/firestore';
-import { UserProfile } from '../../../../core/models/user-profile';
-import { LoadingOverlay } from '../../../../shared/components/loading-overlay/loading-overlay';
-import { IonContent, IonItem, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonButton, IonInput, IonSpinner } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signin',
@@ -26,11 +22,11 @@ import { IonContent, IonItem, IonButton, IonInput } from '@ionic/angular/standal
     ButtonModule,
     InputTextModule,
     RouterLink,
-    LoadingOverlay,
     IonInput,
     IonItem,
     IonContent,
-    IonButton
+    IonButton,
+    IonSpinner
 ],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
