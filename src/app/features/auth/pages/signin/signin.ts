@@ -14,6 +14,7 @@ import { User } from '@angular/fire/auth';
 import { serverTimestamp } from '@angular/fire/firestore';
 import { UserProfile } from '../../../../core/models/user-profile';
 import { LoadingOverlay } from '../../../../shared/components/loading-overlay/loading-overlay';
+import { IonContent, IonItem, IonButton, IonInput } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signin',
@@ -26,7 +27,11 @@ import { LoadingOverlay } from '../../../../shared/components/loading-overlay/lo
     InputTextModule,
     RouterLink,
     LoadingOverlay,
-  ],
+    IonInput,
+    IonItem,
+    IonContent,
+    IonButton
+],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
   standalone: true,

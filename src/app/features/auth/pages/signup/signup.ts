@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 import { Router, RouterLink } from '@angular/router';
 import { Logo } from '../../../../shared/components/logo/logo';
+import { IonButton, IonContent, IonInput, IonItem } from '@ionic/angular/standalone';
 @Component({
   selector: 'app-signup',
   imports: [
@@ -27,6 +28,12 @@ import { Logo } from '../../../../shared/components/logo/logo';
     FormsModule,
     RouterLink,
     Logo,
+
+
+    IonButton,
+    IonContent,
+    IonInput,
+    IonItem
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
