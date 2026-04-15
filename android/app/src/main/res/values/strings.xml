@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">yappa</string>
+    <string name="title_activity_main">yappa</string>
+    <string name="package_name">co.za.yappa.app</string>
+    <string name="custom_url_scheme">co.za.yappa.app</string>
+</resources>

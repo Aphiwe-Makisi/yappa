@@ -140,6 +140,123 @@ Messages are stored as a **subcollection** of conversations to support large mes
 
 ---
 
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run the web app
+
+```bash
+ng serve
+```
+
+Navigate to `http://localhost:4200`
+
+---
+
+## Running the App (Web & Mobile)
+
+This project supports both:
+
+- 🌐 **Web** (Angular dev server)
+- 📱 **Android** (via Capacitor)
+
+### Mobile Setup (Android via Capacitor)
+
+**1. Install Capacitor**
+
+```bash
+npm install @capacitor/core @capacitor/cli
+npx cap init
+```
+
+**2. Add Android platform**
+
+```bash
+npx cap add android
+```
+
+**3. Configure Capacitor**
+
+Update `capacitor.config.ts`:
+
+```ts
+webDir: 'dist/yappa/browser'
+```
+
+**4. Build Angular app**
+
+```bash
+ng build
+```
+
+**5. Sync project**
+
+```bash
+npx cap sync android
+```
+
+**6. Run on emulator**
+
+List available emulators:
+
+```bash
+emulator -list-avds
+```
+
+Start your chosen emulator:
+
+```bash
+emulator -avd <emulator_name>
+```
+
+Once the emulator is running, deploy the app:
+
+```bash
+npx cap run android
+```
+
+When prompted, select the running emulator from the list.
+
+---
+
+## Live Reload (Web + Mobile)
+
+Run both platforms simultaneously with live updates.
+
+**Terminal 1 — Web:**
+```bash
+ng serve --host 0.0.0.0 --port 3000
+```
+
+**Terminal 2 — Android:**
+```bash
+npx cap run android -l --external
+```
+
+Web updates instantly and the mobile app reflects changes in real time.
+
+---
+
+## Requirements
+
+- Node.js
+- Angular CLI
+- Android Studio
+- Java 21
+
+Verify your Java version:
+
+```bash
+java -version
+```
+
+---
+
 ## Deployment
 
 The project can be deployed using **Firebase Hosting**.
@@ -191,8 +308,6 @@ firebase deploy
 
 ### User Presence & Activity
 
-- [ ] Online / offline status
-- [ ] Last seen indicator
 - [ ] Typing indicators
 - [ ] Activity status updates
 
