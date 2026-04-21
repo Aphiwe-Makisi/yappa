@@ -58,7 +58,7 @@ export class Signin {
     const password = sanitisedUserInput(this.form.get('password')?.value);
     this.authService.signIn(email, password).subscribe({
       next: (res: any) => {
-        this.router.navigateByUrl('/auth/conversations');
+        this.router.navigateByUrl('/tabs');
       },
       error: (error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);

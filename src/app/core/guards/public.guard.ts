@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { map, take } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { AuthService } from '../services/auth';
 
 export const publicGuard: CanActivateFn = () => {
@@ -8,7 +8,8 @@ export const publicGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   return authService.currentUser$.pipe(
+    filter(user => user !== undefined),
     take(1),
-    map((user) => (user ? router.createUrlTree(['/conversations']) : true)),
+    map((user) => (user ? router.createUrlTree(['/tabs']) : true)),
   );
 };

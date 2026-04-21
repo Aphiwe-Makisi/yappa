@@ -1,44 +1,20 @@
-<div class="container">
-  <div class="header flex-row">
-    <span class="title flex-row">
-      <div class="icon-wrapper">
-        <i class="pi pi-comment" style="font-size: 2rem"></i>
-      </div>
-      <h2>Chats</h2>
-    </span>
-    <div class="action-buttons">
-      <p-button
-        (onClick)="navigateToFriendList()"
-        icon="pi pi-plus"
-        [rounded]="true"
-        severity="secondary"
-      />
-      <p-button
-        (onClick)="logout()"
-        icon="pi pi-sign-out"
-        [rounded]="true"
-        [text]="true"
-        severity="danger"
-      />
-    </div>
-  </div>
-  <div class="wrapper flex-column">
-    <!-- TODO: Implement search in next phase -->
-    <div class="online-now">
-      <!-- TODO: Future implementation -->
-    </div>
-    <div class="chat-list">
-      @let conversations = conversationsWithUsers$ | async;
-      @if (conversations == null) {
-        <app-skeleton-loader></app-skeleton-loader>
-      } @else if (!conversations.length) {
-        <app-no-conversations></app-no-conversations>
-      } @else {
-        @for (conv of conversations; track conv.id) {
-          <app-conversation-item [conversation]="conv"></app-conversation-item>
-        }
-      }
-    </div>
-    <!-- <app-bottom-navigation></app-bottom-navigation> -->
-  </div>
-</div>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chats</ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" (click)="navigateToFriendList()">
+        <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content>
+  @let conversations = conversationsWithUsers$ | async;
+  @for (conv of conversations; track conv.id) {
+    <app-conversation-item [conversation]="conv"></app-conversation-item>
+  }
+</ion-content>

@@ -2,7 +2,7 @@
   --ion-color-primary: #00a89a !important;
   --ion-color-primary-rgb: 0, 168, 154 !important;
 
-  --ion-color-secondary: #ff6b6b !important;
+  /* --ion-color-danger: #ff6b6b !important; */
 
   --ion-background-color: #f8fafc !important;
   --ion-text-color: #0f172a !important;
@@ -13,6 +13,11 @@
   padding: 0;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
+}
+
+ion-toolbar {
+  --padding-start: 1rem;
+  --padding-end: 1rem;
 }
 
 ion-content {

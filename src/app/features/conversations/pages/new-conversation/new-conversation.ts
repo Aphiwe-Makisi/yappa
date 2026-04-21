@@ -8,10 +8,17 @@ import { Router } from '@angular/router';
 import { ChatsService } from '../../services/chats';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { FirestoreDatePipe } from '../../../../shared/pipes/firestore-date.pipe';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-new-conversation',
-  imports: [CommonModule, ButtonModule, Avatar, FirestoreDatePipe],
+  imports: [CommonModule, ButtonModule, Avatar, FirestoreDatePipe, IonHeader,
+      IonTitle,
+      IonContent,
+      IonToolbar,
+      IonButtons,
+      IonButton,
+      IonIcon,],
   templateUrl: './new-conversation.html',
   styleUrl: './new-conversation.css',
   standalone: true,

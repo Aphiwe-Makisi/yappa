@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { Router } from '@angular/router';
 import { ChatDatePipe } from '../../../../shared/pipes/chat-dat.pipe';
+import { IonItem, IonLabel } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-conversation-item',
-  imports: [CommonModule, Avatar, ChatDatePipe],
+  imports: [CommonModule, Avatar, ChatDatePipe, IonLabel, IonItem],
   templateUrl: './conversation-item.html',
   styleUrl: './conversation-item.css',
 })
@@ -17,6 +18,6 @@ export class ConversationItem {
   router: Router = inject(Router);
 
   openConversation(): void {
-    this.router.navigateByUrl(`/conversations/${this.conversation.id}`);
+    this.router.navigate(['/conversations', this.conversation.id]);
   }
 }

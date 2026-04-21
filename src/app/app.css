@@ -1,3 +1,7 @@
+ion-app {
+  z-index: unset !important;
+}
+
 .container {
   height: 100vh;
 }

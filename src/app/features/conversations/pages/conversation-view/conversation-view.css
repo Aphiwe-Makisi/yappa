@@ -1,22 +1,29 @@
-.container {
-  height: 100dvh;
-  position: relative;
+ion-toolbar {
+  --padding-top: 1rem;
+  --padding-bottom: 0.75rem;
 }
 
-.wrapper {
-  flex: 1;
-  gap: 5px;
-  overflow: scroll;
-  padding: 10px 15px;
+app-avatar {
+  margin-right: 0.75rem;
 }
 
-form.flex-row {
-  gap: 10px;
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: center;
+
+  .last-seen {
+    color: var(--ion-color-medium);
+  }
 }
 
-.inputs {
-  padding: 15px;
-  border-top: 1px solid var(--p-primary-300);
+.input-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.35rem;
 }
 
 .incoming,

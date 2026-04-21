@@ -10,7 +10,7 @@ export const notFoundGuard: CanActivateFn = () => {
   return authService.currentUser$.pipe(
     take(1),
     map((user) =>
-      user ? router.createUrlTree(['/conversations']) : router.createUrlTree(['/auth']),
+      user ? router.createUrlTree(['/tabs']) : router.createUrlTree(['/auth']),
     ),
   );
 };
