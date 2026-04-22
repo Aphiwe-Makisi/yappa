@@ -1,11 +1,19 @@
-<ion-item  [button]="true" lines="full" (click)="openConversation()" detail="false" button class="container">
-  
+<ion-item
+  [button]="true"
+  lines="full"
+  (click)="openConversation()"
+  detail="false"
+  button
+  class="container"
+>
   <!-- Avatar -->
   <app-avatar slot="start" [userProfile]="conversation.otherUser"></app-avatar>
 
   <!-- Main Content -->
   <ion-label>
-    <h2><strong>{{ conversation.otherUser?.displayName }}</strong></h2>
+    <h2>
+      <strong>{{ conversation.otherUser?.displayName }}</strong>
+    </h2>
     <p class="last-message">{{ conversation.lastMessage }}</p>
   </ion-label>
 
@@ -23,5 +31,4 @@
       {{ conversation.unreadCount }}
     </ion-badge>
   </div>
-
 </ion-item>

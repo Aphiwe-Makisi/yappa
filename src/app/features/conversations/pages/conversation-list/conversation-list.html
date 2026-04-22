@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Chats</ion-title>
     <ion-buttons slot="end">
@@ -11,10 +11,14 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-  
+
 <ion-content>
   @let conversations = conversationsWithUsers$ | async;
-  @for (conv of conversations; track conv.id) {
-    <app-conversation-item [conversation]="conv"></app-conversation-item>
+  @if (conversations?.length) {
+    @for (conv of conversations; track conv.id) {
+      <app-conversation-item [conversation]="conv"></app-conversation-item>
+    }
+  } @else {
+    <app-no-conversations></app-no-conversations>
   }
 </ion-content>

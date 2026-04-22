@@ -10,7 +10,7 @@ ion-item {
 .meta-data {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: center;
   gap: 6px;
 
   small {

@@ -1,31 +1,5 @@
-<!-- @let users = users$ | async;
-<div class="container">
-  <div class="header flex-row">
-    <span class="title flex-row">
-      <p-button icon="pi pi-arrow-left" (onClick)="back()" [rounded]="true" severity="secondary" />
-      <div class="icon-wrapper">
-        <i class="pi pi-comment" style="font-size: 2rem"></i>
-      </div>
-      <h2>New Chat</h2>
-    </span>
-    <div class="action-buttons">
-      <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" />
-    </div>
-  </div>
-
-  @for (user of users; track user.uid) {
-    <div class="flex-row friend-wrapper" (click)="openOrCreateNewConversation(user.uid)">
-      <app-avatar [userProfile]="user"></app-avatar>
-      <div class="main-content flex-column">
-        <p>{{ user.displayName }}</p>
-        <small class="online-status">{{
-          user.isOnline ? 'Online' : 'Last seen: ' + (user.lastSeen | firestoreDate | date: 'HH:mm')
-        }}</small>
-      </div>
-    </div>
-  }
-</div> -->
-<ion-header>
+@let users = users$ | async;
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Friends</ion-title>
     <ion-buttons slot="end">
@@ -40,5 +14,28 @@
 </ion-header>
 
 <ion-content>
-  
+  @for (user of users; track user.uid) {
+    <ion-item
+      [button]="true"
+      lines="full"
+      detail="false"
+      button
+      (click)="openOrCreateNewConversation(user.uid)"
+    >
+      <app-avatar slot="start" [userProfile]="user"></app-avatar>
+
+      <ion-label>
+        <h2>
+          <strong>{{ user.displayName }}</strong>
+        </h2>
+        <p class="status">
+          {{
+            user.isOnline
+              ? 'Online'
+              : 'Last seen: ' + (user.lastSeen | firestoreDate | date: 'HH:mm')
+          }}
+        </p>
+      </ion-label>
+    </ion-item>
+  }
 </ion-content>

@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { Router } from '@angular/router';
 import { ChatDatePipe } from '../../../../shared/pipes/chat-dat.pipe';
-import { IonItem, IonLabel } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonBadge } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-conversation-item',
-  imports: [CommonModule, Avatar, ChatDatePipe, IonLabel, IonItem],
+  imports: [CommonModule, Avatar, ChatDatePipe, IonLabel, IonItem, IonBadge],
   templateUrl: './conversation-item.html',
   styleUrl: './conversation-item.css',
 })
