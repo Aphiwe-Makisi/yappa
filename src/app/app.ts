@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { LoadingOverlay } from './shared/components/loading-overlay/loading-overlay';
 import { AuthService } from './core/services/auth';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 

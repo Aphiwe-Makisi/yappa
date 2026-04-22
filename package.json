@@ -39,8 +39,6 @@
     "date-fns": "^4.1.0",
     "firebase": "^12.10.0",
     "ionicons": "^8.0.13",
-    "primeicons": "^7.0.0",
-    "primeng": "^20.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

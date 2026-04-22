@@ -3,7 +3,6 @@ import { UserService } from '../../../../core/services/user';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/services/auth';
 import { switchMap } from 'rxjs';
-import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { ChatsService } from '../../services/chats';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
@@ -12,7 +11,7 @@ import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabe
 
 @Component({
   selector: 'app-new-conversation',
-  imports: [CommonModule, ButtonModule, Avatar, FirestoreDatePipe, IonHeader,
+  imports: [CommonModule, Avatar, FirestoreDatePipe, IonHeader,
       IonTitle,
       IonContent,
       IonToolbar,

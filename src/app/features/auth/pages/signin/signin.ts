@@ -2,10 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { ButtonModule } from 'primeng/button';
 import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
-import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
 import { UserService } from '../../../../core/services/user';
@@ -18,9 +15,6 @@ import { IonContent, IonItem, IonButton, IonInput, IonSpinner } from '@ionic/ang
     CommonModule,
     ReactiveFormsModule,
     Logo,
-    IftaLabelModule,
-    ButtonModule,
-    InputTextModule,
     RouterLink,
     IonInput,
     IonItem,

@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { OrderListModule } from 'primeng/orderlist';
 import { ConversationItem } from '../../components/conversation-item/conversation-item';
 import { ChatsService } from '../../services/chats';
 import { filter, switchMap } from 'rxjs';
@@ -16,10 +14,7 @@ import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToo
   selector: 'app-conversation-list',
   imports: [
     CommonModule,
-    ButtonModule,
-    OrderListModule,
     ConversationItem,
-    SkeletonLoader,
     NoConversations,
     IonHeader,
     IonTitle,

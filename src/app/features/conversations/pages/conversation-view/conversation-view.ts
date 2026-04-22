@@ -6,8 +6,6 @@ import { ChatsService } from '../../services/chats';
 import { CommonModule } from '@angular/common';
 import { MessagesService } from '../../services/messages';
 import { Conversation } from '../../models/conversation';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageBubble } from '../../components/message-bubble/message-bubble';
 import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, IonButtons } from '@ionic/angular/standalone';
@@ -18,8 +16,6 @@ import { ChatDatePipe } from "../../../../shared/pipes/chat-dat.pipe";
   selector: 'app-conversation-view',
   imports: [
     CommonModule,
-    InputTextModule,
-    ButtonModule,
     ReactiveFormsModule,
     MessageBubble,
     IonHeader,

@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  EmailValidator,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -9,10 +8,6 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth';
 import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { ButtonModule } from 'primeng/button';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 import { Router, RouterLink } from '@angular/router';
 import { Logo } from '../../../../shared/components/logo/logo';
@@ -24,10 +19,6 @@ import { firstValueFrom } from 'rxjs';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
-    IftaLabelModule,
-    ButtonModule,
     FormsModule,
     RouterLink,
     Logo,
