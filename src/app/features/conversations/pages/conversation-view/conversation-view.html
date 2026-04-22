@@ -1,21 +1,55 @@
-<div class="container flex-column">
-  @let conv = conversation$ | async;
-  @let messages = messages$ | async;
-  <!-- header -->
+@let conv = conversation$ | async;
+@let messages = messages$ | async;
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button shape="round" (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    @if (conv) {
+      <app-avatar slot="start" [userProfile]="conv?.otherUser"></app-avatar>
+      <div class="details">
+        <ion-title>{{conv.otherUser?.displayName}}</ion-title>
+        <p class="last-seen">{{conv.otherUser?.isOnline ? 'Online' : 'Last seen: ' + (conv.otherUser?.lastSeen | chatDate)}}</p>
+      </div>
+    }
+
+    <ion-buttons slot="end">
+      <ion-button shape="round" id="open-dialog">
+        <ion-icon slot="icon-only" name="log-out-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #messageContainer>
   @if (conv) {
-    <app-conversation-header [conv]="conv"></app-conversation-header>
-    <div class="wrapper flex-column" #messageContainer>
-      @for (msg of messages ?? []; track msg.id) {
-        <div [ngClass]="msg.senderId === conv.otherUser?.uid ? 'incoming' : 'outgoing'">
-          <app-message-bubble [message]="msg" [conversation]="conv"></app-message-bubble>
-        </div>
-      }
-    </div>
+    @for (msg of messages ?? []; track msg.id) {
+      <div [ngClass]="msg.senderId === conv.otherUser?.uid ? 'incoming' : 'outgoing'">
+        <app-message-bubble [message]="msg" [conversation]="conv"></app-message-bubble>
+      </div>
+    }
   }
-  <div class="inputs">
-    <form [formGroup]="form" (ngSubmit)="send()" class="flex-row">
-      <input type="text" pInputText formControlName="message" fluid />
-      <p-button type="submit" icon="pi pi-send" [rounded]="true" [disabled]="form.invalid" />
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <form [formGroup]="form" (ngSubmit)="send()" class="input-form">
+      <ion-input
+        formControlName="message"
+        placeholder="Type a message..."
+        fill="outline"
+      ></ion-input>
+      <ion-button
+        type="submit"
+        shape="round"
+        [disabled]="form.invalid"
+      >
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
     </form>
-  </div>
-</div>
+  </ion-toolbar>
+</ion-footer>

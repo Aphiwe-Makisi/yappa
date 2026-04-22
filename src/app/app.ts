@@ -1,12 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { LoadingOverlay } from './shared/components/loading-overlay/loading-overlay';
 import { AuthService } from './core/services/auth';
-import { Auth } from '@angular/fire/auth';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoadingOverlay],
+  imports: [IonApp, IonRouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

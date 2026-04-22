@@ -1,4 +1,4 @@
-.wrapper {
+/* .wrapper {
   padding: 0;
   gap: 10px;
 }
@@ -54,4 +54,23 @@
 
 .flex-column small {
   color: var(--p-surface-400);
+} */
+
+ion-content {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  ion-item {
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
+
+    ion-label {
+      margin-left: 0.75rem !important;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3;
+    }
+  }
 }

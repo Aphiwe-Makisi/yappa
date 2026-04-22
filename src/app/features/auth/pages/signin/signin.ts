@@ -2,18 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { ButtonModule } from 'primeng/button';
 import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
-import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
 import { UserService } from '../../../../core/services/user';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
-import { User } from '@angular/fire/auth';
-import { serverTimestamp } from '@angular/fire/firestore';
-import { UserProfile } from '../../../../core/models/user-profile';
-import { LoadingOverlay } from '../../../../shared/components/loading-overlay/loading-overlay';
+import { IonContent, IonItem, IonButton, IonInput, IonSpinner } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signin',
@@ -21,12 +15,13 @@ import { LoadingOverlay } from '../../../../shared/components/loading-overlay/lo
     CommonModule,
     ReactiveFormsModule,
     Logo,
-    IftaLabelModule,
-    ButtonModule,
-    InputTextModule,
     RouterLink,
-    LoadingOverlay,
-  ],
+    IonInput,
+    IonItem,
+    IonContent,
+    IonButton,
+    IonSpinner
+],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
   standalone: true,
@@ -57,7 +52,7 @@ export class Signin {
     const password = sanitisedUserInput(this.form.get('password')?.value);
     this.authService.signIn(email, password).subscribe({
       next: (res: any) => {
-        this.router.navigateByUrl('/auth/conversations');
+        this.router.navigateByUrl('/tabs');
       },
       error: (error: any) => {
         this.errorMessage = handleFirebaseAuthError(error.code);

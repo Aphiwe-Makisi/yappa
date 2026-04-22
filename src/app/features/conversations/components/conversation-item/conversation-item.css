@@ -1,47 +1,29 @@
-.chat-item {
-  cursor: pointer;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-}
+ion-item {
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
 
-.chat-item:hover {
-  background-color: var(--p-surface-600);
-}
-
-.main-content {
-  flex: 1;
-  gap: 8px;
-}
-
-.last-message-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.last-message {
-  color: var(--p-surface-500);
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  ion-label {
+    margin-left: 0.75rem !important;
+  }
 }
 
 .meta-data {
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
+
+  small {
+    color: var(--ion-color-medium);
+    font-size: 11px;
+  }
 }
 
-.message-count {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: var(--p-success-500);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.last-message {
+  color: var(--ion-color-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .show {

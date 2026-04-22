@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  EmailValidator,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -9,24 +8,25 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth';
 import { getFieldError, sanitisedUserInput } from '../../../../shared/utils';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { ButtonModule } from 'primeng/button';
 import { handleFirebaseAuthError } from '../../../../shared/firebase-errors';
 import { Router, RouterLink } from '@angular/router';
 import { Logo } from '../../../../shared/components/logo/logo';
+import { IonButton, IonContent, IonInput, IonItem, IonSpinner } from '@ionic/angular/standalone';
+import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-signup',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
-    IftaLabelModule,
-    ButtonModule,
     FormsModule,
     RouterLink,
     Logo,
+    IonButton,
+    IonContent,
+    IonInput,
+    IonItem,
+    IonSpinner
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
@@ -53,34 +53,27 @@ export class Signup {
     });
   }
 
-  register(): void {
-    const fullname = sanitisedUserInput(this.form.get('full_name')?.value);
-    const email = sanitisedUserInput(this.form.get('email')?.value);
-    const password = sanitisedUserInput(this.form.get('password')?.value);
-    const confirmPassword = sanitisedUserInput(this.form.get('confirm_password')?.value);
+  async register(): Promise<void> {
+    const fullname = sanitisedUserInput(this.form.value.full_name);
+    const email = sanitisedUserInput(this.form.value.email);
+    const password = sanitisedUserInput(this.form.value.password);
+    const confirmPassword = sanitisedUserInput(this.form.value.confirm_password);
 
-    const match = this.comparePasswords(password, confirmPassword);
-
-    if (!match) {
+    if (!this.comparePasswords(password, confirmPassword)) {
       this.errorMessage = "Passwords don't match";
       return;
     }
 
-    this.authService
-      .signUp(email, password, fullname)
-      .then(() => {
-        this.authService.signOut().subscribe({
-          next: () => {
-            this.continueToLogin();
-          },
-          error: (err) => {
-            console.error(err);
-          },
-        });
-      })
-      .catch((error: any) => {
-        this.errorMessage = handleFirebaseAuthError(error.code);
-      });
+    try {
+      await this.authService.signUp(email, password, fullname);
+
+      await firstValueFrom(this.authService.signOut());
+
+      this.continueToLogin();
+
+    } catch (error: any) {
+      this.errorMessage = handleFirebaseAuthError(error.code);
+    }
   }
 
   comparePasswords(password: string, confirmPassword: string): boolean {
@@ -88,6 +81,7 @@ export class Signup {
   }
 
   continueToLogin(): void {
+    this.form.reset();
     this.router.navigateByUrl('/auth/login');
   }
 }

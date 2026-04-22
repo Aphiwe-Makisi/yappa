@@ -1,12 +1,13 @@
-<div class="avatar flex-row">
-  <div class="image">
-    @if (userProfile && userProfile.photoURL) {
-      <img src="" alt="" />
-    } @else {
+<ion-avatar>
+  @if (userProfile && userProfile.photoURL) {
+    <img [src]="userProfile.photoURL" [alt]="userProfile.displayName" />
+  } @else {
+    <div class="avatar-fallback">
       <b>{{ displayName() }}</b>
-    }
-  </div>
-  @if (userProfile && userProfile.isOnline) {
-    <span class="indicator"></span>
+    </div>
   }
-</div>
+
+  @if (userProfile && userProfile.isOnline) {
+    <span class="online-indicator"></span>
+  }
+</ion-avatar>

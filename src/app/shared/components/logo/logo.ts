@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-logo',
-  imports: [],
+  imports: [IonIcon],
   templateUrl: './logo.html',
   styleUrl: './logo.css',
 })

@@ -1,44 +1,6 @@
-.container {
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-}
-
-.wrapper {
-  flex: 1;
-  padding: 0;
-  gap: 10px;
-}
-
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--p-primary-200);
-  color: var(--p-surface-700);
-  padding: 8px;
-  border-radius: 8px;
-}
-
-.title {
-  align-items: center;
-  gap: 10px;
-}
-
-.header {
-  padding: 10px 15px;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--p-primary-300);
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.chat-list {
-  flex: 1;
-  gap: 2px;
-  overflow: scroll;
+ion-content {
+  --padding-top: 0.5rem;
+  --padding-bottom: 1.5rem;
+  --padding-start: 0rem;
+  --padding-end: 0rem;
 }

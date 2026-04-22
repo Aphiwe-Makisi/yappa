@@ -1,27 +1,36 @@
-import { Component, ElementRef, inject, ViewChild, viewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth';
 import { ChatsService } from '../../services/chats';
 import { CommonModule } from '@angular/common';
-import { ConversationHeader } from '../../components/conversation-header/conversation-header';
 import { MessagesService } from '../../services/messages';
 import { Conversation } from '../../models/conversation';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageBubble } from '../../components/message-bubble/message-bubble';
+import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, IonButtons } from '@ionic/angular/standalone';
+import { Avatar } from "../../../../shared/components/avatar/avatar";
+import { ChatDatePipe } from "../../../../shared/pipes/chat-dat.pipe";
 
 @Component({
   selector: 'app-conversation-view',
   imports: [
     CommonModule,
-    ConversationHeader,
-    InputTextModule,
-    ButtonModule,
     ReactiveFormsModule,
     MessageBubble,
-  ],
+    IonHeader,
+    IonFooter,
+    IonContent,
+    IonToolbar,
+    IonIcon,
+    IonButton,
+    IonInput,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    Avatar,
+    ChatDatePipe
+],
   templateUrl: './conversation-view.html',
   styleUrl: './conversation-view.css',
 })
@@ -31,10 +40,12 @@ export class ConversationView {
   private messageService: MessagesService = inject(MessagesService);
   private authService: AuthService = inject(AuthService);
   private fb: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
 
   @ViewChild('messageContainer') messageContainer!: ElementRef;
+  @ViewChild(IonContent) content!: IonContent;
 
-  conversationId$ = this.route.params.pipe(map((params) => params['conversationId']));
+  conversationId$ = this.route.params.pipe(map((params) => params['id']));
   conversation$: Observable<Conversation | null> = combineLatest([
     this.authService.uid$,
     this.conversationId$,
@@ -47,7 +58,7 @@ export class ConversationView {
   messages$ = this.conversationId$.pipe(
     switchMap((id) => this.messageService.getMessages(id)),
     tap(() => {
-      setTimeout(() => this.scrollToBottom(), 100);
+      setTimeout(() => this.scrollToBottom(), 300);
     }),
   );
 
@@ -62,6 +73,10 @@ export class ConversationView {
     this.form = this.fb.group({
       message: ['', Validators.required],
     });
+  }
+
+  back(): void {
+    this.router.navigate(['/tabs/chats']);
   }
 
   send(): void {
@@ -101,9 +116,6 @@ export class ConversationView {
   }
 
   scrollToBottom(): void {
-    try {
-      this.messageContainer.nativeElement.scrollTop =
-        this.messageContainer.nativeElement.scrollHeight;
-    } catch (e) {}
+    this.content.scrollToBottom(300);
   }
 }
